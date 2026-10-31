@@ -42,16 +42,14 @@ research/ ──► specs/ ──► data/ ──► src/mm/strategies/ ──�
  (papers)    (math,     (download,  (strategy + tests)     (event-driven         (one folder   (look for bias,
               params,    record,                            engine, fills,        per run)      overfitting,
               limits)    clean)                             latency, fees)                      bad assumptions)
-                                          learnings/  ◄── explains every step and decision
 ```
 
-Each stage reads the previous stage's files and doesn't redo another stage's work. The agent roles are in [.claude/agents/](.claude/agents/), and the project rules are in [CLAUDE.md](CLAUDE.md). A strategy isn't done until it passes review.
+Each stage reads the previous stage's files and doesn't redo another stage's work. The project rules are in [CLAUDE.md](CLAUDE.md). A strategy isn't done until it passes review.
 
 ## Where to start reading
 
 | If you want… | Read |
 |---|---|
-| To learn from scratch, in order | [learnings/READING_PATH.md](learnings/READING_PATH.md), a step-by-step path through the lessons, spec, code and reports |
 | The strategy's math and rules | [specs/glft-perp.md](specs/glft-perp.md) |
 | The strategy code | [src/mm/strategies/glft.py](src/mm/strategies/glft.py) and [glft_calibrate.py](src/mm/strategies/glft_calibrate.py) |
 | How the backtester works | [src/mm/backtest/README.md](src/mm/backtest/README.md) |
