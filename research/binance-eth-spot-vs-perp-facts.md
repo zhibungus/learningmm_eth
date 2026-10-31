@@ -17,7 +17,7 @@
 
 | | Spot ETHUSDT | USDⓈ-M perp ETHUSDT |
 |---|---|---|
-| VIP0 maker / taker | **0.10% / 0.10%** (10 / 10 bp) **[Approx]** | **0.02% / 0.05%** (2 / 5 bp) (see learnings doc) |
+| VIP0 maker / taker | **0.10% / 0.10%** (10 / 10 bp) **[Approx]** | **0.02% / 0.05%** (2 / 5 bp)|
 | BNB discount | **25% off** → 0.075% / 0.075% **[Approx]** | 10% off → 1.8 / 4.5 bp |
 | VIP tiers | Fees fall with 30-day spot+margin volume and BNB balance. Example seen: VIP1 0.09% maker. **Exact thresholds not verified** | Similar ladder (not re-checked) |
 | Maker rebate programs | Spot Liquidity Provider / "Spot Maker" program. Max rebate **0.8 bp** (June 2025 press release). Sept 2024: Tier 1 needed **≥ $25M weekly maker volume or ≥ 0.05% maker share**, and the top tier's rebate went from -1 bp to -0.8 bp **[Approx]** | USDⓈ-M LP program exists (terms not checked) |
@@ -128,7 +128,6 @@ Break-even on spot VIP0 needs ~20 bp ≈ **480 ticks** of captured spread per ro
   1. As a **signal**, via the spot index and basis.
   2. As a **hedge leg**.
   3. On **0-maker-fee promo pairs**.
-- The owner's earlier decision (perp) and the new "I assume spot" conflict. **This needs an explicit choice.** The tutor should log it.
 
 ---
 
