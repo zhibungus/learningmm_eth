@@ -44,7 +44,7 @@ research/ ──► specs/ ──► data/ ──► src/mm/strategies/ ──�
               limits)    clean)                             latency, fees)                      bad assumptions)
 ```
 
-Each stage reads the previous stage's files and doesn't redo another stage's work. The project rules are in [CLAUDE.md](CLAUDE.md). A strategy isn't done until it passes review.
+Each stage reads the previous stage's files and doesn't redo another stage's work. A strategy isn't done until it passes review.
 
 ## Where to start reading
 
