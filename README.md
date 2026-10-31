@@ -1,4 +1,4 @@
-# Quant Market Making Lab
+# An introduction to market making on Binance 
 
 A market making strategy for the Binance ETHUSDT perpetual future to learn the process from start to finish: research, spec, data, code, backtest and independent review, done with Claude.
 
