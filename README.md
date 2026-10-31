@@ -54,7 +54,7 @@ Each stage reads the previous stage's files and doesn't redo another stage's wor
 | The strategy code | [src/mm/strategies/glft.py](src/mm/strategies/glft.py) and [glft_calibrate.py](src/mm/strategies/glft_calibrate.py) |
 | How the backtester works | [src/mm/backtest/README.md](src/mm/backtest/README.md) |
 | The final result and its limits | [reports/2026-10-30_glft_live/summary.md](reports/2026-10-30_glft_live/summary.md) and [its review](reviews/2026-10-30_glft_live.md) |
-| The second-simulator check | [hft/README.md](hft/README.md) and [learnings/hftbacktest/](learnings/hftbacktest/) |
+| The second-simulator check | [hft/README.md](hft/README.md)|
 
 The code is commented for a learner: each block says what it does and why, including Python syntax and the market meaning.
 
