@@ -1,8 +1,6 @@
 # Spec: fee-aware GLFT market maker, Binance USDⓈ-M ETHUSDT perpetual
 
 *Written 2026-10-22 by quant-researcher. Status: v1.1 (2026-10-22): adds Binance order rate limits (§7.4), records the developer interpretations (§4.5, §5, §7, §11), fixes file names, and adds the first smoke-run note (§9), states the calibration/engine fill-rule mismatch (§6.2, §8, §13), adds calibrated-value context to the placeholder claims (§4, §10, §13), and specifies trade-gap masking (§6.2). After the validator review: `unknown_order` storm rule (§7.1), total-size replaces (§4.6), H2 falsified with a v2 calibration list (§9), jump row (§8). **v1.2 (2026-10-23):** market-order flatten with no attempt cap and a `flatten_failed` state (§7.1), fill-race rejects (§4.6, §7.1), v1.1 results and testing rules (§9), stale lines fixed. **v1.2.1 (2026-10-30):** trade-gap mask uses aggregate `trade_id` continuity, not raw `first_id`/`last_id` (§6.2, §13 row 9).*
-*Owner decision this implements: [00-choosing-the-strategy.md §5](../learnings/strategy-glft/00-choosing-the-strategy.md) (idea 1, perp, not spot).*
-*Lesson refs like **(L1 §4)** point to `learnings/strategy-glft/01-...md` section 4. Use them in code comments. **(not yet covered in lessons)** marks material the tutor has not taught yet. The planned lesson number is given where there is one.*
 
 ## Key ideas
 - Quote one bid and one ask around the **mid**. Each side sits at **fee + GLFT half-spread**, and both are shifted against inventory by **ω per ETH held**.
