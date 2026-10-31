@@ -1,8 +1,6 @@
 """Fee-aware GLFT market maker for the Binance USD-M ETHUSDT perpetual.
 
 Implements ``specs/glft-perp.md`` (v1.2).  Section marks like "spec §4.4" point into that file, and
-"L1 §3" means ``learnings/strategy-glft/01-how-a-market-maker-earns-and-loses.md`` section 3.
-Anything the lessons have not taught yet is marked "not yet covered in lessons".
 
 What the strategy does, in one picture (spec Key ideas; L1 §3, §8)::
 
