@@ -4,9 +4,9 @@ A market making strategy for the Binance ETHUSDT perpetual future to learn the p
 
 The strategy is a **fee-aware GLFT market maker** (Guéant–Lehalle–Fernandez-Tapia). It posts a bid and an ask around the mid-price and shifts both quotes against its inventory. The quote distances come from a closed-form formula calibrated on market data.
 
-> **The result is negative, and that is the main lesson.** The code passed review. On every test day, the strategy lost money after fees. The main cause is adverse selection: right after we get filled, the price tends to move against us. A second, independent simulator ([hftbacktest](https://github.com/nkaz001/hftbacktest)) confirms this.
+> **Main lesson: Negative results** On every test day, the strategy lost money after fees. The main cause is adverse selection (toxic flow). ([hftbacktest](https://github.com/nkaz001/hftbacktest)) confirms this.
 >
-> This is a learning project, not financial advice and not a trading system. It never traded real money, and backtests do not predict live results.
+> This is a learning project, and real money was never used.
 
 ## Results at a glance
 
@@ -63,7 +63,6 @@ The code is commented for a learner: each block says what it does and why, inclu
 ## Repository map
 
 ```
-.claude/agents/   Role definitions for the AI agents (researcher, data engineer, developer, backtester, validator, tutor)
 research/         Literature notes: Binance market making survey, spot vs perp facts, hftbacktest
 specs/            glft-perp.md, the strategy specification (formulas, parameters, risk limits, hypotheses)
 config/           YAML configs: data, backtests, paper trading, calibrated parameters
@@ -77,7 +76,6 @@ tests/            pytest suite (216 tests)
 reports/          One folder per backtest or calibration run: summary.md, metrics, charts, exact config
 reviews/          Validator reports, one per run
 hft/              Port of the strategy to hftbacktest, data converter and comparison results
-learnings/        Lessons, decision write-ups and the reading path
 ```
 
 ## Running it
