@@ -1,0 +1,434 @@
+{
+  "run_id": "2026-10-19_demo_quoter_l2_live_smoke",
+  "seed": 42,
+  "periods": {
+    "live_recording": {
+      "duration_hours": 5.615590833333333,
+      "pnl": {
+        "total_net": -1.5439830000050279,
+        "gross_trading": -0.39300000000007607,
+        "spread_capture": 0.5474999999998771,
+        "inventory_pnl": -0.9404999999999532,
+        "fees": 1.1509829999999996,
+        "funding": 0.0,
+        "realized": 1.0528359375005951,
+        "unrealized": -1.4458359374997614,
+        "check_gross_minus_costs_minus_net": 4.952038779038048e-12,
+        "net_if_liquidated_at_touch": -2.0247770000041783
+      },
+      "final_position": 0.4000000000000004,
+      "fills": {
+        "by_mechanism": {
+          "cross": {
+            "count": 7,
+            "qty": 0.279,
+            "spread_capture": 0.01404500000000553
+          },
+          "through": {
+            "count": 68,
+            "qty": 1.5210000000000001,
+            "spread_capture": 0.5254549999999244
+          },
+          "queue": {
+            "count": 15,
+            "qty": 0.6,
+            "spread_capture": 0.007999999999947249
+          }
+        },
+        "count": 90,
+        "maker_count": 90,
+        "taker_count": 0,
+        "maker_volume": 2.3999999999999986,
+        "taker_volume": 0.0,
+        "traded_notional": 5754.915,
+        "maker_share_of_volume": 1.0
+      },
+      "orders": {
+        "submitted": 183,
+        "accepted": 136,
+        "rejected": 47,
+        "reject_reasons": {
+          "post_only_would_cross": 47
+        },
+        "risk_rejects": 0,
+        "canceled": 6,
+        "replaced": 128,
+        "fill_ratio_orders": 0.35294117647058826,
+        "fill_ratio_qty": 0.35294117647058887
+      },
+      "max_drawdown": {
+        "abs": 4.926093199999741,
+        "pct_of_start_cash": 0.0004926093199999741
+      },
+      "sharpe": {
+        "annualized": 14.972003307691255,
+        "t_stat_mean_pnl_per_bucket": 0.3784192274287335,
+        "bucket_s": 60.0,
+        "n_buckets": 336,
+        "note": "PnL-increment Sharpe; not comparable to a fund Sharpe"
+      },
+      "daily_pnl": {
+        "2026-10-19": -1.4047905000043102
+      },
+      "inventory": {
+        "mean": 0.33957261574990133,
+        "std": 0.055275198920979145,
+        "mean_abs": 0.33957261574990133,
+        "max_abs": 0.5000000000000002,
+        "p05": 0.30000000000000027,
+        "p50": 0.3500000000000002,
+        "p95": 0.5000000000000002,
+        "limit": 0.5,
+        "time_at_limit_pct": 8.44380688563514,
+        "histogram": {
+          "bin_edges": [
+            -0.5,
+            -0.4,
+            -0.3,
+            -0.19999999999999996,
+            -0.09999999999999998,
+            0.0,
+            0.10000000000000009,
+            0.20000000000000007,
+            0.30000000000000004,
+            0.4,
+            0.5
+          ],
+          "time_share": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.000741986545310645,
+            0.000148397309062129,
+            0.00019786307874950534,
+            0.9047783933518005,
+            0.09413335971507716
+          ]
+        }
+      },
+      "markouts": {
+        "1s": {
+          "n_fills": 89,
+          "avg_markout_per_eth": -0.6030851063829938,
+          "avg_markout_bps": -2.516514315783703,
+          "avg_move_per_eth": -0.8357446808510196,
+          "avg_move_bps": -3.488055516254254,
+          "total_markout_pnl": -1.4172500000000356,
+          "pct_fills_adverse": 91.01123595505618,
+          "avg_move_bps_maker": -3.488055516254254
+        },
+        "10s": {
+          "n_fills": 81,
+          "avg_markout_per_eth": -0.8471428571429162,
+          "avg_markout_bps": -3.531583243603172,
+          "avg_move_per_eth": -1.1042857142857019,
+          "avg_move_bps": -4.605364469697038,
+          "total_markout_pnl": -1.7790000000001236,
+          "pct_fills_adverse": 70.37037037037037,
+          "avg_move_bps_maker": -4.605364469697038
+        },
+        "60s": {
+          "n_fills": 78,
+          "avg_markout_per_eth": -0.7337500000000318,
+          "avg_markout_bps": -3.0615910927186056,
+          "avg_move_per_eth": -0.7592499999999405,
+          "avg_move_bps": -3.167922294790884,
+          "total_markout_pnl": -1.4675000000000635,
+          "pct_fills_adverse": 84.61538461538461,
+          "avg_move_bps_maker": -3.167922294790884
+        }
+      },
+      "identity_gap": -5.4569682106375694e-12
+    }
+  },
+  "period_info": {
+    "live_recording": {
+      "start": "2026-10-19",
+      "end": "2026-10-19",
+      "start_time": "00:00:00",
+      "end_time": "24:00:00",
+      "window_ns": [
+        1792368000000000000,
+        1792454400000000000
+      ],
+      "events": 77909,
+      "wall_seconds": 1.4,
+      "first_ts_ns": 1792419793713000000,
+      "last_ts_ns": 1792440009840000000,
+      "files": [
+        {
+          "path": "data\\processed\\binance_um_live\\trades\\ETHUSDT\\2026-10-19\\part-142318-0001.parquet",
+          "bytes": 21757,
+          "rows": 885,
+          "sha256": "ebb0e814721c7869e5f54c988b582e5bac47805169be0e2572870cfb1ba13ef4"
+        },
+        {
+          "path": "data\\processed\\binance_um_live\\trades\\ETHUSDT\\2026-10-19\\part-142636-0001.parquet",
+          "bytes": 11172,
+          "rows": 377,
+          "sha256": "a8e54fd9891b78010abcfb19377b519c1dd9b1049b0049ea7844756ce1e5c3e8"
+        },
+        {
+          "path": "data\\processed\\binance_um_live\\trades\\ETHUSDT\\2026-10-19\\part-145512-0001.parquet",
+          "bytes": 5288,
+          "rows": 59,
+          "sha256": "9a2b3a3de7ed03ce3276419c86edc1286cf09e183268decc634de326e1d523ff"
+        },
+        {
+          "path": "data\\processed\\binance_um_live\\trades\\ETHUSDT\\2026-10-19\\part-172227-0001.parquet",
+          "bytes": 10055,
+          "rows": 320,
+          "sha256": "4643b4c98b53dc7a1ad50ea89e2e76a496976a019cc81e1a85140f646c15f338"
+        },
+        {
+          "path": "data\\processed\\binance_um_live\\trades\\ETHUSDT\\2026-10-19\\part-1792439998890000000-0001.parquet",
+          "bytes": 13973,
+          "rows": 525,
+          "sha256": "7c71efed84c7339a8c49dc6169de93f6fec2aabb8076b91639addc6c558b6274"
+        },
+        {
+          "path": "data\\processed\\binance_um_live\\quotes\\ETHUSDT\\2026-10-19\\part-142318-0001.parquet",
+          "bytes": 471585,
+          "rows": 36058,
+          "sha256": "f528219dc28a4fb27a3d523457e528ec3e70e37f03c05c0ec59f2c9ccf16d5e1"
+        },
+        {
+          "path": "data\\processed\\binance_um_live\\quotes\\ETHUSDT\\2026-10-19\\part-142636-0001.parquet",
+          "bytes": 116161,
+          "rows": 9831,
+          "sha256": "808448a246804c9ea27a6d05de5855f9fd14fe40fa07f8f93c4953bb22bb83cf"
+        },
+        {
+          "path": "data\\processed\\binance_um_live\\quotes\\ETHUSDT\\2026-10-19\\part-145512-0001.parquet",
+          "bytes": 80399,
+          "rows": 5909,
+          "sha256": "ca1a4b533aed380b9008ab0254cd376f0144a47a21d17a7b30d53bb54d083fd6"
+        },
+        {
+          "path": "data\\processed\\binance_um_live\\quotes\\ETHUSDT\\2026-10-19\\part-172227-0001.parquet",
+          "bytes": 103737,
+          "rows": 8272,
+          "sha256": "d4c7e929d1bc76dfac26ef3b70f2f407aaf83f4a45f910bc0184b0e6a47fac00"
+        },
+        {
+          "path": "data\\processed\\binance_um_live\\quotes\\ETHUSDT\\2026-10-19\\part-1792439998885000000-0001.parquet",
+          "bytes": 163783,
+          "rows": 14724,
+          "sha256": "cbf7674531bcc62d0d7da4d951a60661b4b49e4d37ba909287253c90dd454620"
+        },
+        {
+          "path": "data\\processed\\binance_um_live\\depth\\ETHUSDT\\2026-10-19\\part-142318-0001.parquet",
+          "bytes": 341766,
+          "rows": 67216,
+          "sha256": "3ae1bc8faf968e48c02849ad7daedd339d70236b4f2acac1c5a4eff5e637774c"
+        },
+        {
+          "path": "data\\processed\\binance_um_live\\depth\\ETHUSDT\\2026-10-19\\part-142636-0001.parquet",
+          "bytes": 156800,
+          "rows": 28324,
+          "sha256": "69ac4ee8617ec7b9e205df716dfbedda70b641a035a19fc9ec10ff00ee419c21"
+        },
+        {
+          "path": "data\\processed\\binance_um_live\\depth\\ETHUSDT\\2026-10-19\\part-145512-0001.parquet",
+          "bytes": 48992,
+          "rows": 8043,
+          "sha256": "733abbba1b16b5e85f4a6bdb4b267eb7e7719021d66dfaf05989136a4f564379"
+        },
+        {
+          "path": "data\\processed\\binance_um_live\\depth\\ETHUSDT\\2026-10-19\\part-172227-0001.parquet",
+          "bytes": 133216,
+          "rows": 23630,
+          "sha256": "cb348bcf7a15556feae1a03744674baeecf4bc96275e69e3bff3f2c243a51f28"
+        },
+        {
+          "path": "data\\processed\\binance_um_live\\depth\\ETHUSDT\\2026-10-19\\part-1792440000188000000-0001.parquet",
+          "bytes": 164412,
+          "rows": 30174,
+          "sha256": "95189c3bc8d3891def85e447ece376b7449aebc2556ad036de613038e4ab9bcf"
+        },
+        {
+          "path": "data\\processed\\binance_um_live\\gaps\\ETHUSDT\\2026-10-19\\part-172227-0001.parquet",
+          "bytes": 1299,
+          "rows": 1,
+          "sha256": "1783ff87b9d68d4f9ac6d93f0cacd8004b6e46943d22501c2bb16dbe7a19cdf6"
+        },
+        {
+          "path": "data\\processed\\binance_um_live\\gaps\\ETHUSDT\\2026-10-19\\part-1792440000188000000-0001.parquet",
+          "bytes": 1299,
+          "rows": 1,
+          "sha256": "f3b99fbd9d86e439d401995c4d8a6b5ab2781d38ae62cbc1734b3e1653875013"
+        }
+      ]
+    }
+  },
+  "sensitivity": {
+    "colocated": {
+      "live_recording": {
+        "net_pnl": -2.624053500010632,
+        "spread_capture": 1.588499999999954,
+        "inventory_pnl": -2.10350000000003,
+        "fees": 2.109053500000002,
+        "funding": 0.0,
+        "fills": 172,
+        "maker_share_of_volume": 1.0,
+        "fill_ratio_orders": 0.4782608695652174,
+        "sharpe": 9.297549007859963,
+        "max_drawdown": 5.327670600001511,
+        "avg_move_headline_bps": -2.747181326780112,
+        "final_position": 0.4999999999999999,
+        "filled_qty": 4.4,
+        "mechanisms": {
+          "through": [
+            2.775,
+            1.4541249999999937
+          ],
+          "cross": [
+            0.682,
+            0.01772999999997728
+          ],
+          "queue": [
+            0.9430000000000001,
+            0.11664499999998271
+          ]
+        }
+      }
+    },
+    "pessimistic_fills": {
+      "live_recording": {
+        "net_pnl": -1.9168675399960193,
+        "spread_capture": 0.5148699999998589,
+        "inventory_pnl": -1.3048199999999424,
+        "fees": 1.1269175399999998,
+        "funding": 0.0,
+        "fills": 102,
+        "maker_share_of_volume": 1.0,
+        "fill_ratio_orders": 0.35555555555555557,
+        "sharpe": 15.885274297878095,
+        "max_drawdown": 5.38430150000022,
+        "avg_move_headline_bps": -4.632362599938188,
+        "final_position": 0.4500000000000003,
+        "filled_qty": 2.349999999999999,
+        "mechanisms": {
+          "through": [
+            2.35,
+            0.5148699999998589
+          ]
+        }
+      }
+    },
+    "no_cross_fills": {
+      "live_recording": {
+        "net_pnl": -1.9168675400032953,
+        "spread_capture": 0.5148699999998589,
+        "inventory_pnl": -1.3048199999999437,
+        "fees": 1.1269175399999996,
+        "funding": 0.0,
+        "fills": 90,
+        "maker_share_of_volume": 1.0,
+        "fill_ratio_orders": 0.35555555555555557,
+        "sharpe": 15.885274297818851,
+        "max_drawdown": 5.38430150000022,
+        "avg_move_headline_bps": -4.632362599938188,
+        "final_position": 0.45000000000000034,
+        "filled_qty": 2.3499999999999988,
+        "mechanisms": {
+          "queue": [
+            0.617,
+            0.008254999999945084
+          ],
+          "through": [
+            1.733,
+            0.5066149999999139
+          ]
+        }
+      }
+    },
+    "latency_spikes": {
+      "live_recording": {
+        "net_pnl": -1.5471504000051937,
+        "spread_capture": 0.5494999999999208,
+        "inventory_pnl": -1.0414999999999508,
+        "fees": 1.0551503999999998,
+        "funding": 0.0,
+        "fills": 81,
+        "maker_share_of_volume": 1.0,
+        "fill_ratio_orders": 0.33587786259541985,
+        "sharpe": 14.821492874824372,
+        "max_drawdown": 4.908589699998629,
+        "avg_move_headline_bps": -4.952901089154623,
+        "final_position": 0.4000000000000002,
+        "filled_qty": 2.1999999999999997,
+        "mechanisms": {
+          "through": [
+            1.458,
+            0.5308699999999494
+          ],
+          "cross": [
+            0.21200000000000002,
+            0.011680000000015298
+          ],
+          "queue": [
+            0.53,
+            0.006949999999956162
+          ]
+        }
+      }
+    },
+    "higher_latency": {
+      "live_recording": {
+        "net_pnl": -1.4449130000029982,
+        "spread_capture": 0.051499999999873564,
+        "inventory_pnl": -0.6329999999999243,
+        "fees": 0.8634130000000004,
+        "funding": 0.0,
+        "fills": 66,
+        "maker_share_of_volume": 1.0,
+        "fill_ratio_orders": 0.3103448275862069,
+        "sharpe": 18.38691232006988,
+        "max_drawdown": 5.272516799997902,
+        "avg_move_headline_bps": -4.308402011523328,
+        "final_position": 0.5000000000000001,
+        "filled_qty": 1.7999999999999998,
+        "mechanisms": {
+          "cross": [
+            0.017,
+            0.0016149999999965985
+          ],
+          "through": [
+            1.121,
+            0.03671499999994148
+          ],
+          "queue": [
+            0.662,
+            0.013169999999935499
+          ]
+        }
+      }
+    },
+    "pessimistic_all": {
+      "live_recording": {
+        "net_pnl": -1.4449129999884462,
+        "spread_capture": 0.04911999999988347,
+        "inventory_pnl": -0.6306199999999331,
+        "fees": 0.8634130000000002,
+        "funding": 0.0,
+        "fills": 77,
+        "maker_share_of_volume": 1.0,
+        "fill_ratio_orders": 0.3103448275862069,
+        "sharpe": 18.386912320154952,
+        "max_drawdown": 5.272516799996083,
+        "avg_move_headline_bps": -4.307984361639236,
+        "final_position": 0.5000000000000001,
+        "filled_qty": 1.8,
+        "mechanisms": {
+          "through": [
+            1.8,
+            0.04911999999988348
+          ]
+        }
+      }
+    }
+  }
+}

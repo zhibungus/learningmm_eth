@@ -1,0 +1,706 @@
+{
+  "config": {
+    "run": {
+      "tag": "v1_1",
+      "seed": 42,
+      "out_dir": "reports"
+    },
+    "data": {
+      "symbol": "ETHUSDT",
+      "source": "archive",
+      "streams": [
+        "trades",
+        "quotes",
+        "funding"
+      ],
+      "trade_dataset": "agg_trades",
+      "periods": {
+        "in_sample": {
+          "start": "2024-03-29",
+          "end": "2024-03-29"
+        },
+        "out_of_sample": {
+          "start": "2024-03-30",
+          "end": "2024-03-30"
+        }
+      }
+    },
+    "strategy": {
+      "name": "glft",
+      "params": {
+        "sigma": 0.2500744437,
+        "A": 0.3563803315,
+        "k": 3.6661773601,
+        "gamma": 0.2874652098,
+        "xi_equals_gamma": true,
+        "skew_at_Q_ticks": 25,
+        "fee_mode": "exact",
+        "skew_off": false,
+        "maker_fee": 0.0002,
+        "order_qty": 0.01,
+        "max_inventory": 0.05,
+        "min_notional_usdt": 20,
+        "min_qty": 0.001,
+        "min_half_spread_ticks": 10,
+        "requote_ticks": 5,
+        "urgent_requote_ticks": 15,
+        "min_requote_interval_ms": 1000,
+        "reject_cooldown_ms": 1000,
+        "stale_quote_ms": 3000,
+        "gap_cooldown_ms": 5000,
+        "spread_pause_ticks": 20,
+        "vol_pause_mult": 3.0,
+        "vol_resume_mult": 2.0,
+        "pause_resume_ms": 5000,
+        "vol_sample_ms": 1000,
+        "vol_ewma_halflife_s": 60,
+        "vol_min_samples": 60,
+        "max_drawdown_usdt": 5.0,
+        "max_rejects_per_min": 20,
+        "reject_window_s": 60,
+        "unknown_order_grace_ms": 2000,
+        "inventory_breach_mult": 1.5,
+        "flatten_on_kill": true,
+        "flatten_slip_ticks": 5,
+        "flatten_max_attempts": 5,
+        "rate_orders_10s_max": 150,
+        "rate_orders_1m_max": 600,
+        "rate_ip_weight_1m_max": 1200,
+        "max_modifies_per_order": 9000,
+        "ufr_warn": 0.98,
+        "print_stats_on_stop": true,
+        "cal_sigma_dt_ms": 1000,
+        "cal_sigma_check_dt_ms": 10000,
+        "cal_lambda_dt_ms": 500,
+        "cal_latency_ms": 400,
+        "cal_delta_min_ticks": 10,
+        "cal_delta_max_ticks": 150,
+        "cal_delta_step_ticks": 5,
+        "cal_max_trade_silence_ms": 10000,
+        "cal_min_hits": 20,
+        "cal_bootstrap": 200
+      }
+    },
+    "latency": {
+      "feed_latency_ms": 240.0,
+      "order_latency_ms": 132.0,
+      "report_latency_ms": 240.0,
+      "order_jitter_ms": 59.0,
+      "feed_jitter_ms": 59.0,
+      "feed_delay_quantiles_ms": [
+        [
+          0.0,
+          130.0
+        ],
+        [
+          0.5,
+          239.0
+        ],
+        [
+          0.9,
+          296.0
+        ],
+        [
+          0.99,
+          772.0
+        ],
+        [
+          1.0,
+          1500.0
+        ]
+      ],
+      "feed_delay_knot_ms": 2000.0,
+      "no_event_ts_extra_ms": 7.0,
+      "timer_interval_ms": 1000,
+      "min_latency_ms": 1.0,
+      "allow_zero_latency": false
+    },
+    "fill_model": {
+      "type": "quote_trade",
+      "require_trade_through": false,
+      "cancel_assumption": "proportional",
+      "initial_queue_factor": 1.0,
+      "cap_fills_by_volume": true,
+      "cross_fills": true,
+      "sweep_penalty_ticks": 1,
+      "sweep_max_tiers": 5
+    },
+    "exchange": {
+      "tick_size": 0.01,
+      "lot_size": 0.001,
+      "min_qty": 0.001,
+      "min_notional": 20,
+      "maker_fee": 0.0002,
+      "taker_fee": 0.0005,
+      "max_position": 0.05,
+      "max_order_notional": 5000,
+      "gap_trade_streams": [
+        "market"
+      ],
+      "replace_keeps_priority": false
+    },
+    "account": {
+      "starting_cash": 10000.0
+    },
+    "metrics": {
+      "equity_bucket_s": 1.0,
+      "sharpe_bucket_s": 60.0,
+      "markout_horizons_s": [
+        1,
+        10,
+        60
+      ],
+      "headline_markout_s": 10,
+      "mid_sample_ms": 10.0,
+      "inventory_limit": 0.05,
+      "inventory_histogram_bins": 10,
+      "bootstrap_n": 1000,
+      "coverage_gap_s": 60.0
+    },
+    "sensitivity": {
+      "enabled": true,
+      "variants": {
+        "colocated": {
+          "latency": {
+            "feed_latency_ms": 10.0,
+            "order_latency_ms": 20.0,
+            "report_latency_ms": 10.0,
+            "feed_delay_quantiles_ms": null,
+            "order_jitter_ms": 0.0,
+            "feed_jitter_ms": 0.0
+          }
+        },
+        "pessimistic_fills": {
+          "fill_model": {
+            "require_trade_through": true,
+            "cancel_assumption": "all_behind",
+            "initial_queue_factor": 1.5
+          }
+        },
+        "no_cross_fills": {
+          "fill_model": {
+            "cross_fills": false
+          }
+        },
+        "latency_spikes": {
+          "latency": {
+            "feed_delay_quantiles_ms": [
+              [
+                0.0,
+                130.0
+              ],
+              [
+                0.5,
+                239.0
+              ],
+              [
+                0.9,
+                400.0
+              ],
+              [
+                0.95,
+                900.0
+              ],
+              [
+                0.99,
+                1800.0
+              ],
+              [
+                1.0,
+                3000.0
+              ]
+            ]
+          }
+        },
+        "higher_latency": {
+          "latency": {
+            "feed_delay_quantiles_ms": [
+              [
+                0.0,
+                260.0
+              ],
+              [
+                0.5,
+                478.0
+              ],
+              [
+                0.9,
+                592.0
+              ],
+              [
+                0.99,
+                1544.0
+              ],
+              [
+                1.0,
+                3000.0
+              ]
+            ],
+            "feed_latency_ms": 480.0,
+            "order_latency_ms": 264.0,
+            "report_latency_ms": 480.0
+          }
+        },
+        "pessimistic_all": {
+          "fill_model": {
+            "require_trade_through": true,
+            "cancel_assumption": "all_behind",
+            "initial_queue_factor": 1.5,
+            "cross_fills": false
+          },
+          "latency": {
+            "feed_delay_quantiles_ms": [
+              [
+                0.0,
+                260.0
+              ],
+              [
+                0.5,
+                478.0
+              ],
+              [
+                0.9,
+                592.0
+              ],
+              [
+                0.99,
+                1544.0
+              ],
+              [
+                1.0,
+                3000.0
+              ]
+            ],
+            "feed_latency_ms": 480.0,
+            "order_latency_ms": 264.0,
+            "report_latency_ms": 480.0
+          }
+        },
+        "skew_off": {
+          "strategy": {
+            "params": {
+              "sigma": 0.2500744437,
+              "A": 0.3563803315,
+              "k": 3.6661773601,
+              "gamma": 0.2874652098,
+              "xi_equals_gamma": true,
+              "skew_at_Q_ticks": 25,
+              "fee_mode": "exact",
+              "skew_off": true,
+              "maker_fee": 0.0002,
+              "order_qty": 0.01,
+              "max_inventory": 0.05,
+              "min_notional_usdt": 20,
+              "min_qty": 0.001,
+              "min_half_spread_ticks": 10,
+              "requote_ticks": 5,
+              "urgent_requote_ticks": 15,
+              "min_requote_interval_ms": 1000,
+              "reject_cooldown_ms": 1000,
+              "stale_quote_ms": 3000,
+              "gap_cooldown_ms": 5000,
+              "spread_pause_ticks": 20,
+              "vol_pause_mult": 3.0,
+              "vol_resume_mult": 2.0,
+              "pause_resume_ms": 5000,
+              "vol_sample_ms": 1000,
+              "vol_ewma_halflife_s": 60,
+              "vol_min_samples": 60,
+              "max_drawdown_usdt": 5.0,
+              "max_rejects_per_min": 20,
+              "reject_window_s": 60,
+              "unknown_order_grace_ms": 2000,
+              "inventory_breach_mult": 1.5,
+              "flatten_on_kill": true,
+              "flatten_slip_ticks": 5,
+              "flatten_max_attempts": 5,
+              "rate_orders_10s_max": 150,
+              "rate_orders_1m_max": 600,
+              "rate_ip_weight_1m_max": 1200,
+              "max_modifies_per_order": 9000,
+              "ufr_warn": 0.98,
+              "print_stats_on_stop": true,
+              "cal_sigma_dt_ms": 1000,
+              "cal_sigma_check_dt_ms": 10000,
+              "cal_lambda_dt_ms": 500,
+              "cal_latency_ms": 400,
+              "cal_delta_min_ticks": 10,
+              "cal_delta_max_ticks": 150,
+              "cal_delta_step_ticks": 5,
+              "cal_max_trade_silence_ms": 10000,
+              "cal_min_hits": 20,
+              "cal_bootstrap": 200
+            }
+          }
+        },
+        "fee_shift": {
+          "strategy": {
+            "params": {
+              "sigma": 0.2500744437,
+              "A": 0.3563803315,
+              "k": 3.6661773601,
+              "gamma": 0.2874652098,
+              "xi_equals_gamma": true,
+              "skew_at_Q_ticks": 25,
+              "fee_mode": "shift",
+              "skew_off": false,
+              "maker_fee": 0.0002,
+              "order_qty": 0.01,
+              "max_inventory": 0.05,
+              "min_notional_usdt": 20,
+              "min_qty": 0.001,
+              "min_half_spread_ticks": 10,
+              "requote_ticks": 5,
+              "urgent_requote_ticks": 15,
+              "min_requote_interval_ms": 1000,
+              "reject_cooldown_ms": 1000,
+              "stale_quote_ms": 3000,
+              "gap_cooldown_ms": 5000,
+              "spread_pause_ticks": 20,
+              "vol_pause_mult": 3.0,
+              "vol_resume_mult": 2.0,
+              "pause_resume_ms": 5000,
+              "vol_sample_ms": 1000,
+              "vol_ewma_halflife_s": 60,
+              "vol_min_samples": 60,
+              "max_drawdown_usdt": 5.0,
+              "max_rejects_per_min": 20,
+              "reject_window_s": 60,
+              "unknown_order_grace_ms": 2000,
+              "inventory_breach_mult": 1.5,
+              "flatten_on_kill": true,
+              "flatten_slip_ticks": 5,
+              "flatten_max_attempts": 5,
+              "rate_orders_10s_max": 150,
+              "rate_orders_1m_max": 600,
+              "rate_ip_weight_1m_max": 1200,
+              "max_modifies_per_order": 9000,
+              "ufr_warn": 0.98,
+              "print_stats_on_stop": true,
+              "cal_sigma_dt_ms": 1000,
+              "cal_sigma_check_dt_ms": 10000,
+              "cal_lambda_dt_ms": 500,
+              "cal_latency_ms": 400,
+              "cal_delta_min_ticks": 10,
+              "cal_delta_max_ticks": 150,
+              "cal_delta_step_ticks": 5,
+              "cal_max_trade_silence_ms": 10000,
+              "cal_min_hits": 20,
+              "cal_bootstrap": 200
+            }
+          }
+        },
+        "gamma_low": {
+          "strategy": {
+            "params": {
+              "sigma": 0.2500744437,
+              "A": 0.3563803315,
+              "k": 3.6661773601,
+              "gamma": 0.0460095732,
+              "xi_equals_gamma": true,
+              "skew_at_Q_ticks": 10,
+              "fee_mode": "exact",
+              "skew_off": false,
+              "maker_fee": 0.0002,
+              "order_qty": 0.01,
+              "max_inventory": 0.05,
+              "min_notional_usdt": 20,
+              "min_qty": 0.001,
+              "min_half_spread_ticks": 10,
+              "requote_ticks": 5,
+              "urgent_requote_ticks": 15,
+              "min_requote_interval_ms": 1000,
+              "reject_cooldown_ms": 1000,
+              "stale_quote_ms": 3000,
+              "gap_cooldown_ms": 5000,
+              "spread_pause_ticks": 20,
+              "vol_pause_mult": 3.0,
+              "vol_resume_mult": 2.0,
+              "pause_resume_ms": 5000,
+              "vol_sample_ms": 1000,
+              "vol_ewma_halflife_s": 60,
+              "vol_min_samples": 60,
+              "max_drawdown_usdt": 5.0,
+              "max_rejects_per_min": 20,
+              "reject_window_s": 60,
+              "unknown_order_grace_ms": 2000,
+              "inventory_breach_mult": 1.5,
+              "flatten_on_kill": true,
+              "flatten_slip_ticks": 5,
+              "flatten_max_attempts": 5,
+              "rate_orders_10s_max": 150,
+              "rate_orders_1m_max": 600,
+              "rate_ip_weight_1m_max": 1200,
+              "max_modifies_per_order": 9000,
+              "ufr_warn": 0.98,
+              "print_stats_on_stop": true,
+              "cal_sigma_dt_ms": 1000,
+              "cal_sigma_check_dt_ms": 10000,
+              "cal_lambda_dt_ms": 500,
+              "cal_latency_ms": 400,
+              "cal_delta_min_ticks": 10,
+              "cal_delta_max_ticks": 150,
+              "cal_delta_step_ticks": 5,
+              "cal_max_trade_silence_ms": 10000,
+              "cal_min_hits": 20,
+              "cal_bootstrap": 200
+            }
+          }
+        },
+        "gamma_high": {
+          "strategy": {
+            "params": {
+              "sigma": 0.2500744437,
+              "A": 0.3563803315,
+              "k": 3.6661773601,
+              "gamma": 1.1485124103,
+              "xi_equals_gamma": true,
+              "skew_at_Q_ticks": 50,
+              "fee_mode": "exact",
+              "skew_off": false,
+              "maker_fee": 0.0002,
+              "order_qty": 0.01,
+              "max_inventory": 0.05,
+              "min_notional_usdt": 20,
+              "min_qty": 0.001,
+              "min_half_spread_ticks": 10,
+              "requote_ticks": 5,
+              "urgent_requote_ticks": 15,
+              "min_requote_interval_ms": 1000,
+              "reject_cooldown_ms": 1000,
+              "stale_quote_ms": 3000,
+              "gap_cooldown_ms": 5000,
+              "spread_pause_ticks": 20,
+              "vol_pause_mult": 3.0,
+              "vol_resume_mult": 2.0,
+              "pause_resume_ms": 5000,
+              "vol_sample_ms": 1000,
+              "vol_ewma_halflife_s": 60,
+              "vol_min_samples": 60,
+              "max_drawdown_usdt": 5.0,
+              "max_rejects_per_min": 20,
+              "reject_window_s": 60,
+              "unknown_order_grace_ms": 2000,
+              "inventory_breach_mult": 1.5,
+              "flatten_on_kill": true,
+              "flatten_slip_ticks": 5,
+              "flatten_max_attempts": 5,
+              "rate_orders_10s_max": 150,
+              "rate_orders_1m_max": 600,
+              "rate_ip_weight_1m_max": 1200,
+              "max_modifies_per_order": 9000,
+              "ufr_warn": 0.98,
+              "print_stats_on_stop": true,
+              "cal_sigma_dt_ms": 1000,
+              "cal_sigma_check_dt_ms": 10000,
+              "cal_lambda_dt_ms": 500,
+              "cal_latency_ms": 400,
+              "cal_delta_min_ticks": 10,
+              "cal_delta_max_ticks": 150,
+              "cal_delta_step_ticks": 5,
+              "cal_max_trade_silence_ms": 10000,
+              "cal_min_hits": 20,
+              "cal_bootstrap": 200
+            }
+          }
+        }
+      }
+    },
+    "paper": {
+      "log_interval_s": 10.0,
+      "heartbeat_s": 1.0,
+      "reorder_hold_ms": 250.0,
+      "reorder_poll_ms": 50.0
+    }
+  },
+  "meta": {
+    "written_utc": "2026-10-22T22:04:42.462721+00:00",
+    "python": "3.13.14",
+    "command": "python -m mm.backtest.run --config config\\backtest\\glft_smoke.yaml --tag v1_1 --workers 8",
+    "git": {
+      "commit": "2de3d1a2e197620755d48159e023d08e315ee5e2",
+      "dirty": true
+    },
+    "code": {
+      "combined_sha256": "100f12c207c41115e5009781ea7ff47c38be76a1910dd268b1b7af25195e3836",
+      "files": [
+        {
+          "path": "src\\mm\\__init__.py",
+          "sha256": "6a26491ed0e48522c859a512a224d839d14cfafeb258b157f488f5f834ddbed3"
+        },
+        {
+          "path": "src\\mm\\backtest\\__init__.py",
+          "sha256": "5df11407e3384ccc4313521693f6484abb88bb79e5c5dcd6550469e68b31aee7"
+        },
+        {
+          "path": "src\\mm\\backtest\\config.py",
+          "sha256": "6ee50189160a4fb0a890cf2ceee5868df4261aa9977568e1d89b962675766cd1"
+        },
+        {
+          "path": "src\\mm\\backtest\\engine.py",
+          "sha256": "77cca29590a1f7194e0b1ac4d5501059378c7c05c695bf83e4b9e5e2b2cf230e"
+        },
+        {
+          "path": "src\\mm\\backtest\\exchange.py",
+          "sha256": "dd4cb9242f72fbc5eb31b80a96f985473c48e99f413e9b35a6415ce117aa9dcc"
+        },
+        {
+          "path": "src\\mm\\backtest\\fills.py",
+          "sha256": "929b47bd1e83f32a7e7bb098d4f2c2392d3315a5657ab827a1ff49449e35ceb9"
+        },
+        {
+          "path": "src\\mm\\backtest\\metrics.py",
+          "sha256": "3a8016c2b97180eaa6552f5208c0c5643db7122c07f1d097c47ef3b67fbb4d56"
+        },
+        {
+          "path": "src\\mm\\backtest\\report.py",
+          "sha256": "59d30aa95cac72e4b5c9c006f75afb7737ad1dece9251305c06de7cce550007a"
+        },
+        {
+          "path": "src\\mm\\backtest\\run.py",
+          "sha256": "d453bb6d23a8e1edf0108887924c0036d61ea2b2c2d148376709862bac3c1159"
+        },
+        {
+          "path": "src\\mm\\backtest\\strategy.py",
+          "sha256": "1b14f32dc8868f13ac670b0a33775fa4cbec91e9c9d3b2e5463c0d810f3863c4"
+        },
+        {
+          "path": "src\\mm\\data\\__init__.py",
+          "sha256": "b497b303b686ec2b6f64e6b2f1dcaba8e6db26674c98575b81e1150c76720f9d"
+        },
+        {
+          "path": "src\\mm\\data\\book.py",
+          "sha256": "a94b651ea731ffd70cc63b4c693172ec639128596653fe9fd8231e52290728a3"
+        },
+        {
+          "path": "src\\mm\\data\\config.py",
+          "sha256": "49cc44ea79df89ab3109c6e5b989dd926466b9df864e4e9e01996196c3341e0c"
+        },
+        {
+          "path": "src\\mm\\data\\events.py",
+          "sha256": "4d4440b75f4e6ce05112568688dbbed5dd2211b18e21fec6534bca64bf0299d0"
+        },
+        {
+          "path": "src\\mm\\data\\loaders.py",
+          "sha256": "d3f9bcff74bfbef274d0ab628ca49b98d2faece8cb48f37c56079f2bd9e8128a"
+        },
+        {
+          "path": "src\\mm\\data\\schemas.py",
+          "sha256": "1e678613b4a2d7f1b680425155cb76c70d615b9ca49f932f335a7a77a070df38"
+        }
+      ]
+    },
+    "manifest": {
+      "in_sample": [
+        {
+          "path": "data\\processed\\binance_um\\agg_trades\\ETHUSDT\\2024-03-29\\part-0.parquet",
+          "bytes": 9154653,
+          "rows": 921565,
+          "sha256": "9100029d6e07fbf00e012bfa75963206465f0f430367274609ca2373250a5119"
+        },
+        {
+          "path": "data\\processed\\binance_um\\quotes\\ETHUSDT\\2024-03-29\\part-0.parquet",
+          "bytes": 113215620,
+          "rows": 7981165,
+          "sha256": "da349973949054ce9a15304c0ecf14c5f9ba69052a3f340bc5a87b74992feaa9"
+        },
+        {
+          "path": "data\\processed\\binance_um\\funding\\ETHUSDT\\2024-03\\part-0.parquet",
+          "bytes": 2856,
+          "rows": 93,
+          "sha256": "365a36a285209b102fc0109541ec75e2c3f0d89349bed42d77cc342815a9e25a"
+        }
+      ],
+      "out_of_sample": [
+        {
+          "path": "data\\processed\\binance_um\\agg_trades\\ETHUSDT\\2024-03-30\\part-0.parquet",
+          "bytes": 6962128,
+          "rows": 680664,
+          "sha256": "7a1c6f8baa1e02b52961d6a54ed9b1a4891f883c30c095e20963439eead2bdb4"
+        },
+        {
+          "path": "data\\processed\\binance_um\\quotes\\ETHUSDT\\2024-03-30\\part-0.parquet",
+          "bytes": 84299113,
+          "rows": 5996993,
+          "sha256": "891b14cabd4d59d087875947264749e6db22882c04ed6f03757e4dc407596f31"
+        },
+        {
+          "path": "data\\processed\\binance_um\\funding\\ETHUSDT\\2024-03\\part-0.parquet",
+          "bytes": 2856,
+          "rows": 93,
+          "sha256": "365a36a285209b102fc0109541ec75e2c3f0d89349bed42d77cc342815a9e25a"
+        }
+      ]
+    },
+    "periods": {
+      "in_sample": {
+        "start": "2024-03-29",
+        "end": "2024-03-29",
+        "start_time": "00:00:00",
+        "end_time": "24:00:00",
+        "window_ns": [
+          1711670400000000000,
+          1711756800000000000
+        ],
+        "events": 8902733,
+        "wall_seconds": 632.0,
+        "first_ts_ns": 1711670400000000000,
+        "last_ts_ns": 1711756799991000000,
+        "files": [
+          {
+            "path": "data\\processed\\binance_um\\agg_trades\\ETHUSDT\\2024-03-29\\part-0.parquet",
+            "bytes": 9154653,
+            "rows": 921565,
+            "sha256": "9100029d6e07fbf00e012bfa75963206465f0f430367274609ca2373250a5119"
+          },
+          {
+            "path": "data\\processed\\binance_um\\quotes\\ETHUSDT\\2024-03-29\\part-0.parquet",
+            "bytes": 113215620,
+            "rows": 7981165,
+            "sha256": "da349973949054ce9a15304c0ecf14c5f9ba69052a3f340bc5a87b74992feaa9"
+          },
+          {
+            "path": "data\\processed\\binance_um\\funding\\ETHUSDT\\2024-03\\part-0.parquet",
+            "bytes": 2856,
+            "rows": 93,
+            "sha256": "365a36a285209b102fc0109541ec75e2c3f0d89349bed42d77cc342815a9e25a"
+          }
+        ]
+      },
+      "out_of_sample": {
+        "start": "2024-03-30",
+        "end": "2024-03-30",
+        "start_time": "00:00:00",
+        "end_time": "24:00:00",
+        "window_ns": [
+          1711756800000000000,
+          1711843200000000000
+        ],
+        "events": 6677660,
+        "wall_seconds": 417.9,
+        "first_ts_ns": 1711756800000000000,
+        "last_ts_ns": 1711843199986000000,
+        "files": [
+          {
+            "path": "data\\processed\\binance_um\\agg_trades\\ETHUSDT\\2024-03-30\\part-0.parquet",
+            "bytes": 6962128,
+            "rows": 680664,
+            "sha256": "7a1c6f8baa1e02b52961d6a54ed9b1a4891f883c30c095e20963439eead2bdb4"
+          },
+          {
+            "path": "data\\processed\\binance_um\\quotes\\ETHUSDT\\2024-03-30\\part-0.parquet",
+            "bytes": 84299113,
+            "rows": 5996993,
+            "sha256": "891b14cabd4d59d087875947264749e6db22882c04ed6f03757e4dc407596f31"
+          },
+          {
+            "path": "data\\processed\\binance_um\\funding\\ETHUSDT\\2024-03\\part-0.parquet",
+            "bytes": 2856,
+            "rows": 93,
+            "sha256": "365a36a285209b102fc0109541ec75e2c3f0d89349bed42d77cc342815a9e25a"
+          }
+        ]
+      }
+    }
+  }
+}

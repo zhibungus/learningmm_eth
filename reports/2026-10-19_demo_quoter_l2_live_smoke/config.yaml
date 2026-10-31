@@ -1,0 +1,12 @@
+﻿# L2 fill-model smoke test on our own (very short) live recording. DEMO quoter: plumbing only.
+# Latency, fill caps and the sensitivity rows come from the measured defaults in mm/backtest/config.py.
+run: {tag: l2_live_smoke, seed: 42}
+data:
+  source: live
+  streams: [trades, quotes, depth]
+  periods:
+    live_recording: {start: 2026-10-19, end: 2026-10-19}
+strategy: {name: demo_quoter, params: {half_spread_ticks: 1, order_qty: 0.05, max_position: 0.5}}
+fill_model: {type: l2}
+latency: {timer_interval_ms: 200}
+metrics: {inventory_limit: 0.5}

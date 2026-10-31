@@ -1,0 +1,151 @@
+{
+  "run_id": "paper_20261019T173731438391Z",
+  "seed": 42,
+  "periods": {
+    "paper": {
+      "duration_hours": 0.018170071444444442,
+      "pnl": {
+        "total_net": -0.7295641999953659,
+        "gross_trading": -0.2262499999999364,
+        "spread_capture": 0.03975000000002638,
+        "inventory_pnl": -0.26599999999996277,
+        "fees": 0.5033142,
+        "funding": 0.0,
+        "realized": -0.193894285714282,
+        "unrealized": -0.03235571428579077,
+        "check_gross_minus_costs_minus_net": -4.5705661477768444e-12,
+        "net_if_liquidated_at_touch": -0.9100456999967719
+      },
+      "final_position": 0.14999999999999994,
+      "fills": {
+        "by_mechanism": {
+          "queue": {
+            "count": 5,
+            "qty": 0.196
+          },
+          "through": {
+            "count": 36,
+            "qty": 0.758
+          },
+          "cross": {
+            "count": 3,
+            "qty": 0.096
+          }
+        },
+        "count": 44,
+        "maker_count": 44,
+        "taker_count": 0,
+        "maker_volume": 1.0500000000000005,
+        "taker_volume": 0.0,
+        "traded_notional": 2516.571,
+        "maker_share_of_volume": 1.0
+      },
+      "orders": {
+        "submitted": 52,
+        "accepted": 46,
+        "rejected": 6,
+        "reject_reasons": {
+          "post_only_would_cross": 6
+        },
+        "risk_rejects": 0,
+        "canceled": 0,
+        "replaced": 23,
+        "fill_ratio_orders": 0.45652173913043476,
+        "fill_ratio_qty": 0.45652173913043503
+      },
+      "max_drawdown": {
+        "abs": 0.7295641999953659,
+        "pct_of_start_cash": 7.29564199995366e-05
+      },
+      "sharpe": {
+        "annualized": null,
+        "bucket_s": 60.0,
+        "n_buckets": 1
+      },
+      "daily_pnl": {
+        "2026-10-19": -0.7295641999953659
+      },
+      "inventory": {
+        "mean": 0.1446969696969697,
+        "std": 0.08533747084494128,
+        "mean_abs": 0.1446969696969697,
+        "max_abs": 0.35000000000000003,
+        "p05": 0.0,
+        "p50": 0.14999999999999994,
+        "p95": 0.3,
+        "limit": 0.5,
+        "time_at_limit_pct": 0.0,
+        "histogram": {
+          "bin_edges": [
+            -0.5,
+            -0.4,
+            -0.3,
+            -0.19999999999999996,
+            -0.09999999999999998,
+            0.0,
+            0.10000000000000009,
+            0.20000000000000007,
+            0.30000000000000004,
+            0.4,
+            0.5
+          ],
+          "time_share": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.45454545454545453,
+            0.3484848484848485,
+            0.15151515151515152,
+            0.045454545454545456,
+            0.0
+          ]
+        }
+      },
+      "markouts": {
+        "1s": {
+          "n_fills": 44,
+          "avg_markout_per_eth": -0.2078571428570242,
+          "avg_markout_bps": -0.8672309185771271,
+          "avg_move_per_eth": -0.24571428571419218,
+          "avg_move_bps": -1.0251959161754884,
+          "total_markout_pnl": -0.2182499999998754,
+          "pct_fills_adverse": 90.9090909090909,
+          "avg_move_bps_maker": -1.0251959161754884
+        },
+        "10s": {
+          "n_fills": 40,
+          "avg_markout_per_eth": -0.25567999999992663,
+          "avg_markout_bps": -1.066641819537197,
+          "avg_move_per_eth": -0.2941799999999712,
+          "avg_move_bps": -1.2272895841244225,
+          "total_markout_pnl": -0.25567999999992663,
+          "pct_fills_adverse": 65.0,
+          "avg_move_bps_maker": -1.2272895841244225
+        },
+        "60s": {
+          "n_fills": 6,
+          "avg_markout_per_eth": 0.025000000000090856,
+          "avg_markout_bps": 0.10419071947675007,
+          "avg_move_per_eth": 3.469446951953614e-17,
+          "avg_move_bps": -6.565112048593159e-05,
+          "total_markout_pnl": 0.0025000000000090852,
+          "pct_fills_adverse": 33.33333333333333,
+          "avg_move_bps_maker": -6.565112048593159e-05
+        }
+      },
+      "identity_gap": 3.637978807091713e-12
+    }
+  },
+  "period_info": {
+    "paper": {
+      "start": "live, started 20261019T173731438391Z",
+      "end": "stopped 17:38:38Z",
+      "events": 27782,
+      "wall_seconds": 67.1,
+      "feed_drops": 0
+    }
+  },
+  "sensitivity": {}
+}

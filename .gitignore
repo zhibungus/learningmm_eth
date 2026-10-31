@@ -1,0 +1,23 @@
+data/raw/
+data/processed/*
+!data/processed/README.md
+.venv/
+__pycache__/
+*.egg-info/
+.pytest_cache/
+
+learnings/.obsidian/
+
+# hftbacktest: its own environment and converted data (large, rebuilt by hft/convert.py)
+.venv-hft/
+data/hft/
+
+# Local Claude Code state (the agent definitions in .claude/agents/ are kept)
+.claude/settings.local.json
+.claude/scheduled_tasks.lock
+
+# OS / editor clutter
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

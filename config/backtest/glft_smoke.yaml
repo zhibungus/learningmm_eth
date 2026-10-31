@@ -1,0 +1,121 @@
+# Fee-aware GLFT market maker on Binance USD-M ETHUSDT perp (spec: specs/glft-perp.md).
+# Only the values that differ from mm/backtest/config.py DEFAULTS are listed.
+#
+# WORKFLOW (spec §6): 1) calibrate on in_sample ONLY:
+#     .venv\Scripts\python.exe -m mm.strategies.glft_calibrate --config config\backtest\glft_smoke.yaml
+#   2) paste sigma / A / k / gamma from config/strategies/glft_calibrated.yaml into strategy.params below
+#   3) run:  .venv\Scripts\python.exe -m mm.backtest.run --config config\backtest\glft_smoke.yaml
+# out_of_sample is never used for calibration or tuning.
+run:
+  tag: smoke
+  seed: 42
+
+data:
+  symbol: ETHUSDT
+  source: archive
+  streams: [trades, quotes, funding]   # trades are still needed: the simulated exchange fills on them
+  periods:
+    in_sample:     {start: 2024-03-29, end: 2024-03-29}
+    out_of_sample: {start: 2024-03-30, end: 2024-03-30}
+
+strategy:
+  name: glft
+  params: &glft_params           # anchor: the sensitivity variants below reuse these values (see sensitivity:)
+    # ---- model inputs: CALIBRATED on in_sample 2024-03-29 by mm.strategies.glft_calibrate
+    # (source: config/strategies/glft_calibrated.yaml, status ok, no stop condition). Frozen: do not tune.
+    # Re-run with the spec v1.2.1 trade-gap mask (aggregate trade_id continuity): 0 gaps, 0 steps masked.
+    sigma: 0.2500744437     # USDT/sqrt(s)   realised vol of the mid, 1 s grid
+    A: 0.3563679559        # fills/s at distance 0 (WLS fit, 10-150 ticks, R^2 0.996)
+    k: 3.6661773601         # 1/USDT
+    gamma: 0.2874549916    # 1/USDT   solved so the skew at Q = skew_at_Q_ticks = 25 ticks
+    xi_equals_gamma: true
+    skew_at_Q_ticks: 25          # used by calibration only
+    fee_mode: exact              # exact | shift
+    skew_off: false
+    # ---- exchange rules (must equal the exchange: section below)
+    maker_fee: 0.0002
+    order_qty: 0.01              # Delta, ETH
+    max_inventory: 0.05          # Q, ETH
+    min_notional_usdt: 20
+    min_qty: 0.001
+    min_half_spread_ticks: 10
+    # ---- requote rule (spec §4.6)
+    requote_ticks: 5
+    urgent_requote_ticks: 15
+    min_requote_interval_ms: 1000
+    reject_cooldown_ms: 1000
+    # ---- risk limits (spec §7)
+    stale_quote_ms: 3000
+    gap_cooldown_ms: 5000
+    spread_pause_ticks: 20
+    vol_pause_mult: 3.0
+    vol_resume_mult: 2.0
+    pause_resume_ms: 5000
+    vol_sample_ms: 1000
+    vol_ewma_halflife_s: 60
+    vol_min_samples: 60
+    max_drawdown_usdt: 5.0
+    max_rejects_per_min: 20
+    reject_window_s: 60
+    unknown_order_grace_ms: 2000   # unknown_order reject is "explained" by a final report within this (spec §7.1)
+    inventory_breach_mult: 1.5
+    flatten_on_kill: true
+    flatten_slip_ticks: 5
+    flatten_ioc_attempts: 1        # limit IOCs before market orders (spec §7.1)
+    flatten_alert_ms: 10000        # not flat this long after the kill -> flatten_failed
+    # ---- order-rate guard (spec §7.4): 50% of Binance's limits
+    rate_orders_10s_max: 150
+    rate_orders_1m_max: 600
+    rate_ip_weight_1m_max: 1200
+    max_modifies_per_order: 9000
+    ufr_warn: 0.98                 # report-only
+    print_stats_on_stop: true
+    # ---- calibration-only settings (spec §6, §11)
+    cal_sigma_dt_ms: 1000
+    cal_sigma_check_dt_ms: 10000
+    cal_lambda_dt_ms: 500
+    cal_latency_ms: 400
+    cal_delta_min_ticks: 10
+    cal_delta_max_ticks: 150
+    cal_delta_step_ticks: 5
+    cal_max_trade_silence_ms: 10000   # trade-stream outage mask (spec §6.2)
+    cal_min_hits: 20
+    cal_bootstrap: 200
+
+fill_model:
+  type: quote_trade
+  require_trade_through: false
+  cancel_assumption: proportional
+  initial_queue_factor: 1.0
+
+latency:
+  timer_interval_ms: 1000
+exchange:
+  tick_size: 0.01
+  lot_size: 0.001
+  min_qty: 0.001
+  min_notional: 20
+  maker_fee: 0.0002              # Binance USD-M VIP0
+  taker_fee: 0.0005
+  max_position: 0.05             # = Q; any risk_max_position reject means a strategy bug
+  max_order_notional: 5000
+
+metrics:
+  inventory_limit: 0.05          # = Q, for "time at limit"
+
+# Spec §9 extra variants, for INTERPRETATION ONLY (never for selecting parameters). They are merged on top of
+# the engine's default variants. The engine replaces strategy.params wholesale in a variant, so each one
+# repeats the base params through the YAML merge key "<<: *glft_params" and changes one thing.
+# Remove this block (or run with --no-sensitivity) to save run time.
+#
+# Seeds (validator N2): each seed gives a different latency path, so one run is a noisy estimate. `seeds` below is
+# the list for the BASE row (run.seed stays the headline run); a variant lists its own `seeds:`, otherwise it runs
+# once at run.seed. Only the base and the four param variants get 5 seeds; the fill/latency variants run once.
+# Replay jobs = 2 periods x (5 base + 4 x 5 variant + 6 other variants x 1) = 62.
+sensitivity:
+  seeds: &seeds5 [42, 1, 2, 3, 4]
+  variants:
+    skew_off:   {seeds: *seeds5, strategy: {params: {<<: *glft_params, skew_off: true}}}                 # H3: omega = 0 in the skew term
+    fee_shift:  {seeds: *seeds5, strategy: {params: {<<: *glft_params, fee_mode: shift}}}                # H8: naive +fee shift, same gamma
+    gamma_low:  {seeds: *seeds5, strategy: {params: {<<: *glft_params, gamma: 0.0460079819, skew_at_Q_ticks: 10}}}   # skew 10 ticks, re-solved
+    gamma_high: {seeds: *seeds5, strategy: {params: {<<: *glft_params, gamma: 1.1484726889, skew_at_Q_ticks: 50}}}  # skew 50 ticks, re-solved

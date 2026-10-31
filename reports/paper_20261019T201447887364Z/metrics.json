@@ -1,0 +1,140 @@
+{
+  "run_id": "paper_20261019T201447887364Z",
+  "seed": 42,
+  "periods": {
+    "paper": {
+      "duration_hours": 0.017638602860833335,
+      "pnl": {
+        "total_net": -0.41244280000137223,
+        "gross_trading": -0.1245000000000346,
+        "spread_capture": 0.014500000000043653,
+        "inventory_pnl": -0.13900000000007826,
+        "fees": 0.28794280000000005,
+        "funding": 0.0,
+        "realized": -0.06700000000000728,
+        "unrealized": -0.057500000000027286,
+        "check_gross_minus_costs_minus_net": 1.3375967000683886e-12,
+        "net_if_liquidated_at_touch": -0.532964300002277
+      },
+      "final_position": -0.1,
+      "fills": {
+        "by_mechanism": {
+          "queue": {
+            "count": 3,
+            "qty": 0.10900000000000001,
+            "spread_capture": 0.0022249999999989995
+          },
+          "through": {
+            "count": 29,
+            "qty": 0.491,
+            "spread_capture": 0.012275000000044656
+          }
+        },
+        "count": 32,
+        "maker_count": 32,
+        "taker_count": 0,
+        "maker_volume": 0.6000000000000002,
+        "taker_volume": 0.0,
+        "traded_notional": 1439.714,
+        "maker_share_of_volume": 1.0
+      },
+      "orders": {
+        "submitted": 33,
+        "accepted": 30,
+        "rejected": 3,
+        "reject_reasons": {
+          "no_market_data": 2,
+          "post_only_would_cross": 1
+        },
+        "risk_rejects": 0,
+        "canceled": 0,
+        "replaced": 16,
+        "fill_ratio_orders": 0.4,
+        "fill_ratio_qty": 0.39999999999999997
+      },
+      "max_drawdown": {
+        "abs": 0.41244280000137223,
+        "pct_of_start_cash": 4.1244280000137226e-05
+      },
+      "sharpe": {
+        "annualized": null,
+        "bucket_s": 60.0,
+        "n_buckets": 1
+      },
+      "daily_pnl": {
+        "2026-10-19": -0.41244280000137223
+      },
+      "inventory": {
+        "mean": 0.04921874999999999,
+        "std": 0.07780795041920523,
+        "mean_abs": 0.07421874999999999,
+        "max_abs": 0.15,
+        "p05": -0.1,
+        "p50": 0.07499999999999997,
+        "p95": 0.15,
+        "limit": 0.5,
+        "time_at_limit_pct": 0.0,
+        "histogram": {
+          "bin_edges": [
+            -0.5,
+            -0.4,
+            -0.3,
+            -0.19999999999999996,
+            -0.09999999999999998,
+            0.0,
+            0.10000000000000009,
+            0.20000000000000007,
+            0.30000000000000004,
+            0.4,
+            0.5
+          ],
+          "time_share": [
+            0.0,
+            0.0,
+            0.0,
+            0.109375,
+            0.03125,
+            0.6875,
+            0.171875,
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "markouts": {
+        "1s": {
+          "n_fills": 32,
+          "avg_markout_per_eth": -0.2433333333333394,
+          "avg_markout_bps": -1.0140829397093427,
+          "avg_move_per_eth": -0.2675000000000788,
+          "avg_move_bps": -1.1147973273049572,
+          "total_markout_pnl": -0.14600000000000363,
+          "pct_fills_adverse": 90.625,
+          "avg_move_bps_maker": -1.1147973273049572
+        },
+        "10s": {
+          "n_fills": 28,
+          "avg_markout_per_eth": -0.36722222222220396,
+          "avg_markout_bps": -1.5305463374488366,
+          "avg_move_per_eth": -0.3911111111111596,
+          "avg_move_bps": -1.630106203200691,
+          "total_markout_pnl": -0.16524999999999182,
+          "pct_fills_adverse": 75.0,
+          "avg_move_bps_maker": -1.630106203200691
+        }
+      },
+      "identity_gap": -1.8189894035458565e-12
+    }
+  },
+  "period_info": {
+    "paper": {
+      "start": "live, started 20261019T201447887364Z",
+      "end": "stopped 20:15:53Z",
+      "events": 18130,
+      "wall_seconds": 65.8,
+      "feed_drops": 0
+    }
+  },
+  "sensitivity": {}
+}

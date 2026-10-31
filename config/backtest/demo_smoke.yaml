@@ -1,0 +1,46 @@
+# Smoke test of the backtest plumbing with the DEMO quoter (not a real strategy; PnL is meaningless).
+# Only the values that differ from mm/backtest/config.py DEFAULTS need to be listed.
+run:
+  tag: smoke
+  seed: 42
+
+data:
+  symbol: ETHUSDT
+  source: archive
+  streams: [trades, quotes, funding]
+  periods:                       # each period is simulated independently from flat
+    in_sample:     {start: 2024-03-29, end: 2024-03-29}
+    out_of_sample: {start: 2024-03-30, end: 2024-03-30}
+
+strategy:
+  name: demo_quoter
+  params:
+    half_spread_ticks: 2
+    order_qty: 0.05
+    max_position: 0.5
+    requote_ticks: 1
+
+fill_model:
+  type: quote_trade              # top-of-book data: queue estimate from trades + quotes
+  require_trade_through: false
+  cancel_assumption: proportional
+  initial_queue_factor: 1.0
+
+# Latency: the defaults in mm/backtest/config.py come from `python -m mm.data.latency` (2026-10-19): the
+# feed delay is drawn from the measured table (p50 239 / p90 296 / p99 772 ms), order latency is
+# 132 ms + up to 59 ms jitter, reports 240 ms. Archive events are also delivered no earlier than their
+# publish time E. Override here only with a reason.
+latency:
+  timer_interval_ms: 1000
+exchange:
+  tick_size: 0.01
+  lot_size: 0.001
+  min_qty: 0.001
+  min_notional: 20
+  maker_fee: 0.0002              # Binance USD-M VIP0
+  taker_fee: 0.0005
+  max_position: 1.0             # exchange-side hard cap (ETH); demo strategy cap is 0.5
+  max_order_notional: 5000   # USDT per order
+
+metrics:
+  inventory_limit: 0.5           # = demo max_position, for "time at limit"

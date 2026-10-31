@@ -1,0 +1,23 @@
+{
+  "net_pnl_usdt": -2.658997720000043,
+  "fees_usdt": 1.7895977200000004,
+  "num_trades": 378,
+  "trading_volume_eth": 3.7799999999999634,
+  "final_position_eth": -3.469446951953614e-18,
+  "abs_position_max_eth": 0.05000000000000001,
+  "max_drawdown_usdt": 2.659209800000043,
+  "records": 35999,
+  "wall_clock_s_incl_compile": 7.85,
+  "data_span_s": 3600.328991792,
+  "feed_latency_ms": {
+    "n_sampled": 216251,
+    "min_ms": 302.831803,
+    "p50_ms": 308.851406,
+    "p90_ms": 322.851047,
+    "p99_ms": 456.459504,
+    "max_ms": 2990.356065
+  },
+  "gap_intervals_used": 7,
+  "coverage_frac": 0.9998530712628746,
+  "run_complete": true
+}

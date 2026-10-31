@@ -1,0 +1,19 @@
+[project]
+name = "mm"
+version = "0.1.0"
+description = "Quant market making lab: a fee-aware GLFT market maker for Binance ETHUSDT perp, with an event-driven backtester"
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.11"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+asyncio_mode = "auto"

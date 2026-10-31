@@ -1,0 +1,143 @@
+{
+  "config": {
+    "run": {
+      "tag": "demo",
+      "seed": 42,
+      "out_dir": "reports"
+    },
+    "data": {
+      "symbol": "ETHUSDT",
+      "source": "live",
+      "streams": [
+        "trades",
+        "quotes",
+        "depth"
+      ],
+      "trade_dataset": "agg_trades",
+      "periods": {}
+    },
+    "strategy": {
+      "name": "demo_quoter",
+      "params": {
+        "half_spread_ticks": 2,
+        "order_qty": 0.05,
+        "max_position": 0.5,
+        "requote_ticks": 1
+      }
+    },
+    "latency": {
+      "feed_latency_ms": 240.0,
+      "order_latency_ms": 132.0,
+      "report_latency_ms": 240.0,
+      "order_jitter_ms": 59.0,
+      "feed_jitter_ms": 59.0,
+      "no_event_ts_extra_ms": 7.0,
+      "timer_interval_ms": 1000,
+      "min_latency_ms": 1.0,
+      "allow_zero_latency": false
+    },
+    "fill_model": {
+      "type": "l2",
+      "require_trade_through": false,
+      "cancel_assumption": "proportional",
+      "initial_queue_factor": 1.0,
+      "cap_fills_by_volume": true,
+      "cross_fills": true,
+      "sweep_penalty_ticks": 1,
+      "sweep_max_tiers": 5
+    },
+    "exchange": {
+      "tick_size": 0.01,
+      "lot_size": 0.001,
+      "min_qty": 0.001,
+      "min_notional": 20.0,
+      "maker_fee": 0.0002,
+      "taker_fee": 0.0005,
+      "max_position": 1.0,
+      "max_order_notional": 5000
+    },
+    "account": {
+      "starting_cash": 10000.0
+    },
+    "metrics": {
+      "equity_bucket_s": 1.0,
+      "sharpe_bucket_s": 60.0,
+      "markout_horizons_s": [
+        1,
+        10,
+        60
+      ],
+      "headline_markout_s": 10,
+      "mid_sample_ms": 10.0,
+      "inventory_limit": 0.5,
+      "inventory_histogram_bins": 10
+    },
+    "sensitivity": {
+      "enabled": true,
+      "variants": {
+        "colocated": {
+          "latency": {
+            "feed_latency_ms": 10.0,
+            "order_latency_ms": 20.0,
+            "report_latency_ms": 10.0,
+            "order_jitter_ms": 0.0,
+            "feed_jitter_ms": 0.0
+          }
+        },
+        "pessimistic_fills": {
+          "fill_model": {
+            "require_trade_through": true,
+            "cancel_assumption": "all_behind",
+            "initial_queue_factor": 1.5
+          }
+        },
+        "no_cross_fills": {
+          "fill_model": {
+            "cross_fills": false
+          }
+        },
+        "higher_latency": {
+          "latency": {
+            "feed_latency_ms": 480.0,
+            "order_latency_ms": 264.0,
+            "report_latency_ms": 480.0
+          }
+        },
+        "pessimistic_all": {
+          "fill_model": {
+            "require_trade_through": true,
+            "cancel_assumption": "all_behind",
+            "initial_queue_factor": 1.5,
+            "cross_fills": false
+          },
+          "latency": {
+            "feed_latency_ms": 480.0,
+            "order_latency_ms": 264.0,
+            "report_latency_ms": 480.0
+          }
+        }
+      }
+    },
+    "paper": {
+      "log_interval_s": 10,
+      "heartbeat_s": 1,
+      "reorder_hold_ms": 250.0,
+      "reorder_poll_ms": 50.0,
+      "assumed_feed_delay_ms": 200.0
+    }
+  },
+  "meta": {
+    "mode": "paper",
+    "command": "python -m mm.paper.run --config config\\paper\\demo_paper.yaml --duration 60",
+    "feed_drops": 0,
+    "git": {
+      "commit": "1b68ff078b9b6d57876c6490f57daa4d69646010",
+      "dirty": true
+    },
+    "notes": [
+      "PAPER RUN: live public data, simulated exchange; no real orders were sent.",
+      "Engine clock = exchange time; simulated latency feed 240.0 ms, order 132.0 ms (+ jitter), events re-ordered with a 250.0 ms hold.",
+      "Wall time 67.1 s, 27,782 events, 0 feed drops/resyncs (resting orders are cancelled on each)."
+    ]
+  }
+}

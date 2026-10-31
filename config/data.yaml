@@ -1,0 +1,72 @@
+# Data-layer configuration. Nothing in src/mm/data hard-codes these values.
+symbol: ETHUSDT
+
+paths:                       # relative to the project root
+  raw_dir: data/raw
+  processed_dir: data/processed
+  archive_name: binance_um        # subfolder for data.binance.vision files
+  live_name: binance_um_live      # subfolder for our own live recordings
+
+archive:                     # https://data.binance.vision  (free, public)
+  base_url: https://data.binance.vision
+  market_path: data/futures/um
+  timeout_s: 120
+  retries: 3
+  chunk_bytes: 1048576
+  default_datasets: [aggTrades, bookTicker, fundingRate]
+  # granularity = how the archive is split in time; processed = processed folder name
+  datasets:
+    aggTrades:   {granularity: daily,   processed: agg_trades}
+    trades:      {granularity: daily,   processed: trades}
+    bookTicker:  {granularity: daily,   processed: quotes}
+    fundingRate: {granularity: monthly, processed: funding}
+
+rest:                        # Binance USDS-M futures REST
+  base_url: https://fapi.binance.com
+  depth_path: /fapi/v1/depth
+  depth_limit: 1000
+  funding_path: /fapi/v1/fundingRate
+  funding_limit: 1000
+  time_path: /fapi/v1/time
+  timeout_s: 15
+
+live:
+  # Binance split its futures websocket into routed endpoints (legacy URLs retired 2026-04-23):
+  # /public = depth + bookTicker, /market = aggTrade. One connection each.
+  endpoints:
+    public:
+      url: wss://fstream.binance.com/public/stream
+      streams: [depth@100ms, bookTicker]
+    market:
+      url: wss://fstream.binance.com/market/stream
+      streams: [aggTrade]
+  open_timeout_s: 15             # websocket connect timeout
+  ping_interval_s: 20            # websocket keep-alive ping
+  backoff_reset_s: 60            # a connection healthy this long resets the reconnect backoff
+  clock_check_interval_s: 300    # re-measure local-vs-exchange clock offset this often (it drifts)
+  stale_timeout_s: 20            # no message for this long -> reconnect
+  reconnect_min_s: 1
+  reconnect_max_s: 60
+  snapshot_retry_s: 1            # min wait between REST snapshot attempts
+  max_sync_buffer: 20000         # diff messages buffered while waiting for a snapshot
+  record_raw_json: true          # also keep raw websocket JSON (gzip)
+  rotation:
+    max_seconds: 600             # start a new parquet file after this long
+    max_rows: 500000
+    flush_raw_seconds: 5
+
+replay:
+  # Tie-break order for events with identical ts_ns (lower value first). A gap marker must come
+  # before everything else at its timestamp: gap < funding < trade < depth < quote.
+  kind_priority: {gap: 0, funding: 1, trade: 2, depth: 3, quote: 4}
+
+quality:
+  trade_gap_s: 60                # flag silence longer than this between trades
+  quote_gap_s: 10
+  funding_gap_hours_factor: 1.5  # flag if spacing > factor * interval
+  max_examples: 5
+
+latency:
+  # Extra one-way time an order spends in Binance's gateway/matching engine on top of the network.
+  # NOT measurable without an account; this is an assumption, change it if you learn better.
+  order_gateway_extra_ms: 20

@@ -1,0 +1,51 @@
+# Separate environment for the hftbacktest learning track (hft/). NOT the main project env.
+# Kept apart from requirements.txt / .venv because hftbacktest pins its own numba/numpy.
+# Create:  python -m venv .venv-hft
+#          .venv-hft\Scripts\python.exe -m pip install --only-binary=:all: -r requirements-hft.txt
+# Verified 2026-10-30 on Windows 11, Python 3.13.14 (win_amd64 wheels).
+bokeh==3.10.1
+certifi==2026.10.23
+charset-normalizer==3.5.2
+colorama==0.4.6
+colorcet==3.2.1
+contourpy==1.4.0
+cycler==0.12.1
+fonttools==4.68.0
+hftbacktest==2.4.4
+holoviews==1.23.2
+idna==3.20
+Jinja2==3.1.6
+kiwisolver==1.5.1
+linkify-it-py==2.2.0
+llvmlite==0.50.0
+Markdown==3.11.2
+markdown-it-py==4.2.0
+MarkupSafe==3.0.4
+matplotlib==3.11.2
+mdit-py-plugins==0.6.1
+mdurl==0.1.2
+narwhals==2.28.0
+nh3==0.3.7
+numba==0.68.1
+numpy==2.2.6
+packaging==26.3
+pandas==3.1.0
+panel==1.10.0
+panel-material-ui==0.16.6
+param==2.4.2
+pillow==13.0.0
+polars==2.1.0
+polars-runtime-32==2.1.0
+pyarrow==26.0.0
+pyparsing==3.3.3
+python-dateutil==3.0.0
+pyviz_comms==3.0.6
+PyYAML==6.0.3
+requests==2.34.2
+six==1.17.0
+tornado==6.6
+tqdm==4.70.1
+typing_extensions==4.16.0
+tzdata==2026.6
+urllib3==2.8.0
+xyzservices==2026.9.1

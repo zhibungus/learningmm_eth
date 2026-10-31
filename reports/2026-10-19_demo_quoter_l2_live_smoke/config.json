@@ -1,0 +1,545 @@
+{
+  "config": {
+    "run": {
+      "tag": "l2_live_smoke",
+      "seed": 42,
+      "out_dir": "reports"
+    },
+    "data": {
+      "symbol": "ETHUSDT",
+      "source": "live",
+      "streams": [
+        "trades",
+        "quotes",
+        "depth"
+      ],
+      "trade_dataset": "agg_trades",
+      "periods": {
+        "live_recording": {
+          "start": "2026-10-19",
+          "end": "2026-10-19"
+        }
+      }
+    },
+    "strategy": {
+      "name": "demo_quoter",
+      "params": {
+        "half_spread_ticks": 1,
+        "order_qty": 0.05,
+        "max_position": 0.5
+      }
+    },
+    "latency": {
+      "feed_latency_ms": 240.0,
+      "order_latency_ms": 132.0,
+      "report_latency_ms": 240.0,
+      "order_jitter_ms": 59.0,
+      "feed_jitter_ms": 59.0,
+      "feed_delay_quantiles_ms": [
+        [
+          0.0,
+          130.0
+        ],
+        [
+          0.5,
+          239.0
+        ],
+        [
+          0.9,
+          296.0
+        ],
+        [
+          0.99,
+          772.0
+        ],
+        [
+          1.0,
+          1500.0
+        ]
+      ],
+      "feed_delay_knot_ms": 2000.0,
+      "no_event_ts_extra_ms": 7.0,
+      "timer_interval_ms": 200,
+      "min_latency_ms": 1.0,
+      "allow_zero_latency": false
+    },
+    "fill_model": {
+      "type": "l2",
+      "require_trade_through": false,
+      "cancel_assumption": "proportional",
+      "initial_queue_factor": 1.0,
+      "cap_fills_by_volume": true,
+      "cross_fills": true,
+      "sweep_penalty_ticks": 1,
+      "sweep_max_tiers": 5
+    },
+    "exchange": {
+      "tick_size": 0.01,
+      "lot_size": 0.001,
+      "min_qty": 0.001,
+      "min_notional": 20.0,
+      "maker_fee": 0.0002,
+      "taker_fee": 0.0005,
+      "max_position": null,
+      "max_order_notional": null,
+      "gap_trade_streams": [
+        "market"
+      ]
+    },
+    "account": {
+      "starting_cash": 10000.0
+    },
+    "metrics": {
+      "equity_bucket_s": 1.0,
+      "sharpe_bucket_s": 60.0,
+      "markout_horizons_s": [
+        1,
+        10,
+        60
+      ],
+      "headline_markout_s": 10,
+      "mid_sample_ms": 10.0,
+      "inventory_limit": 0.5,
+      "inventory_histogram_bins": 10
+    },
+    "sensitivity": {
+      "enabled": true,
+      "variants": {
+        "colocated": {
+          "latency": {
+            "feed_latency_ms": 10.0,
+            "order_latency_ms": 20.0,
+            "report_latency_ms": 10.0,
+            "feed_delay_quantiles_ms": null,
+            "order_jitter_ms": 0.0,
+            "feed_jitter_ms": 0.0
+          }
+        },
+        "pessimistic_fills": {
+          "fill_model": {
+            "require_trade_through": true,
+            "cancel_assumption": "all_behind",
+            "initial_queue_factor": 1.5
+          }
+        },
+        "no_cross_fills": {
+          "fill_model": {
+            "cross_fills": false
+          }
+        },
+        "latency_spikes": {
+          "latency": {
+            "feed_delay_quantiles_ms": [
+              [
+                0.0,
+                130.0
+              ],
+              [
+                0.5,
+                239.0
+              ],
+              [
+                0.9,
+                400.0
+              ],
+              [
+                0.95,
+                900.0
+              ],
+              [
+                0.99,
+                1800.0
+              ],
+              [
+                1.0,
+                3000.0
+              ]
+            ]
+          }
+        },
+        "higher_latency": {
+          "latency": {
+            "feed_delay_quantiles_ms": [
+              [
+                0.0,
+                260.0
+              ],
+              [
+                0.5,
+                478.0
+              ],
+              [
+                0.9,
+                592.0
+              ],
+              [
+                0.99,
+                1544.0
+              ],
+              [
+                1.0,
+                3000.0
+              ]
+            ],
+            "feed_latency_ms": 480.0,
+            "order_latency_ms": 264.0,
+            "report_latency_ms": 480.0
+          }
+        },
+        "pessimistic_all": {
+          "fill_model": {
+            "require_trade_through": true,
+            "cancel_assumption": "all_behind",
+            "initial_queue_factor": 1.5,
+            "cross_fills": false
+          },
+          "latency": {
+            "feed_delay_quantiles_ms": [
+              [
+                0.0,
+                260.0
+              ],
+              [
+                0.5,
+                478.0
+              ],
+              [
+                0.9,
+                592.0
+              ],
+              [
+                0.99,
+                1544.0
+              ],
+              [
+                1.0,
+                3000.0
+              ]
+            ],
+            "feed_latency_ms": 480.0,
+            "order_latency_ms": 264.0,
+            "report_latency_ms": 480.0
+          }
+        }
+      }
+    },
+    "paper": {
+      "log_interval_s": 10.0,
+      "heartbeat_s": 1.0,
+      "reorder_hold_ms": 250.0,
+      "reorder_poll_ms": 50.0
+    }
+  },
+  "meta": {
+    "written_utc": "2026-10-19T20:32:45.278731+00:00",
+    "python": "3.13.14",
+    "command": "python -m mm.backtest.run --config config\\backtest\\demo_l2_live.yaml",
+    "git": {
+      "commit": "1b68ff078b9b6d57876c6490f57daa4d69646010",
+      "dirty": true
+    },
+    "code": {
+      "combined_sha256": "f4c4ccff8ce0fee58c57556cff0c9412bcd01bd8526be518f575eccee0dafad8",
+      "files": [
+        {
+          "path": "src\\mm\\__init__.py",
+          "sha256": "6a26491ed0e48522c859a512a224d839d14cfafeb258b157f488f5f834ddbed3"
+        },
+        {
+          "path": "src\\mm\\backtest\\__init__.py",
+          "sha256": "5df11407e3384ccc4313521693f6484abb88bb79e5c5dcd6550469e68b31aee7"
+        },
+        {
+          "path": "src\\mm\\backtest\\config.py",
+          "sha256": "71cd119865acce3f18c6931f5c17dfabea86936ddca6b274b5f00922ed7ddfb6"
+        },
+        {
+          "path": "src\\mm\\backtest\\engine.py",
+          "sha256": "1d8cdd9e749f5c19a19ce67a3dea709ac86d5f70695bd0bba8abebfb27223672"
+        },
+        {
+          "path": "src\\mm\\backtest\\examples\\__init__.py",
+          "sha256": "ea2f2cab8be43ec63a5c8e005a2e690c521369d45cfe3a68fa1557f022ef5e65"
+        },
+        {
+          "path": "src\\mm\\backtest\\examples\\demo_quoter.py",
+          "sha256": "4dda0eb6ae7f4d59054edeffb1d838384f29003f5a52a26bd00dcf2e1d3a77fa"
+        },
+        {
+          "path": "src\\mm\\backtest\\exchange.py",
+          "sha256": "00f1b54683c4e3ce8fb62bfad58805c1cd78391af0645b5cecb5c9801e98d689"
+        },
+        {
+          "path": "src\\mm\\backtest\\fills.py",
+          "sha256": "c7d5afa958bcfd6c7f5127f464d132b1bce629caa23cdb762f60fce99bf90782"
+        },
+        {
+          "path": "src\\mm\\backtest\\metrics.py",
+          "sha256": "a5f440640c6453190109e64a20b55cb62c5c9870174b50f3a59e301404b82ed7"
+        },
+        {
+          "path": "src\\mm\\backtest\\report.py",
+          "sha256": "a258ee492de4863ce698cc99639afd8a9dd602d49f36f1d1daceb12516b2aaa1"
+        },
+        {
+          "path": "src\\mm\\backtest\\run.py",
+          "sha256": "a6af7d79fdd5e1705dc698583ee2faf682829efe4612a4849a893760c3084de5"
+        },
+        {
+          "path": "src\\mm\\backtest\\strategy.py",
+          "sha256": "19501b606ba24a26c08445da627c8846d058938ac08b6c0cac21c2b43a6dcfb4"
+        },
+        {
+          "path": "src\\mm\\data\\__init__.py",
+          "sha256": "b497b303b686ec2b6f64e6b2f1dcaba8e6db26674c98575b81e1150c76720f9d"
+        },
+        {
+          "path": "src\\mm\\data\\book.py",
+          "sha256": "ec46af74956c47a368ffa2336052c6fbdd86ebf73aa2807c3b61c018f787e3b5"
+        },
+        {
+          "path": "src\\mm\\data\\config.py",
+          "sha256": "49cc44ea79df89ab3109c6e5b989dd926466b9df864e4e9e01996196c3341e0c"
+        },
+        {
+          "path": "src\\mm\\data\\events.py",
+          "sha256": "4d4440b75f4e6ce05112568688dbbed5dd2211b18e21fec6534bca64bf0299d0"
+        },
+        {
+          "path": "src\\mm\\data\\loaders.py",
+          "sha256": "7dfa4de82edad5dcf900b67ce36f9ef39f65c56c86df6f8eb782f6f4f6106ba3"
+        },
+        {
+          "path": "src\\mm\\data\\schemas.py",
+          "sha256": "1e678613b4a2d7f1b680425155cb76c70d615b9ca49f932f335a7a77a070df38"
+        }
+      ]
+    },
+    "manifest": {
+      "live_recording": [
+        {
+          "path": "data\\processed\\binance_um_live\\trades\\ETHUSDT\\2026-10-19\\part-142318-0001.parquet",
+          "bytes": 21757,
+          "rows": 885,
+          "sha256": "ebb0e814721c7869e5f54c988b582e5bac47805169be0e2572870cfb1ba13ef4"
+        },
+        {
+          "path": "data\\processed\\binance_um_live\\trades\\ETHUSDT\\2026-10-19\\part-142636-0001.parquet",
+          "bytes": 11172,
+          "rows": 377,
+          "sha256": "a8e54fd9891b78010abcfb19377b519c1dd9b1049b0049ea7844756ce1e5c3e8"
+        },
+        {
+          "path": "data\\processed\\binance_um_live\\trades\\ETHUSDT\\2026-10-19\\part-145512-0001.parquet",
+          "bytes": 5288,
+          "rows": 59,
+          "sha256": "9a2b3a3de7ed03ce3276419c86edc1286cf09e183268decc634de326e1d523ff"
+        },
+        {
+          "path": "data\\processed\\binance_um_live\\trades\\ETHUSDT\\2026-10-19\\part-172227-0001.parquet",
+          "bytes": 10055,
+          "rows": 320,
+          "sha256": "4643b4c98b53dc7a1ad50ea89e2e76a496976a019cc81e1a85140f646c15f338"
+        },
+        {
+          "path": "data\\processed\\binance_um_live\\trades\\ETHUSDT\\2026-10-19\\part-1792439998890000000-0001.parquet",
+          "bytes": 13973,
+          "rows": 525,
+          "sha256": "7c71efed84c7339a8c49dc6169de93f6fec2aabb8076b91639addc6c558b6274"
+        },
+        {
+          "path": "data\\processed\\binance_um_live\\quotes\\ETHUSDT\\2026-10-19\\part-142318-0001.parquet",
+          "bytes": 471585,
+          "rows": 36058,
+          "sha256": "f528219dc28a4fb27a3d523457e528ec3e70e37f03c05c0ec59f2c9ccf16d5e1"
+        },
+        {
+          "path": "data\\processed\\binance_um_live\\quotes\\ETHUSDT\\2026-10-19\\part-142636-0001.parquet",
+          "bytes": 116161,
+          "rows": 9831,
+          "sha256": "808448a246804c9ea27a6d05de5855f9fd14fe40fa07f8f93c4953bb22bb83cf"
+        },
+        {
+          "path": "data\\processed\\binance_um_live\\quotes\\ETHUSDT\\2026-10-19\\part-145512-0001.parquet",
+          "bytes": 80399,
+          "rows": 5909,
+          "sha256": "ca1a4b533aed380b9008ab0254cd376f0144a47a21d17a7b30d53bb54d083fd6"
+        },
+        {
+          "path": "data\\processed\\binance_um_live\\quotes\\ETHUSDT\\2026-10-19\\part-172227-0001.parquet",
+          "bytes": 103737,
+          "rows": 8272,
+          "sha256": "d4c7e929d1bc76dfac26ef3b70f2f407aaf83f4a45f910bc0184b0e6a47fac00"
+        },
+        {
+          "path": "data\\processed\\binance_um_live\\quotes\\ETHUSDT\\2026-10-19\\part-1792439998885000000-0001.parquet",
+          "bytes": 163783,
+          "rows": 14724,
+          "sha256": "cbf7674531bcc62d0d7da4d951a60661b4b49e4d37ba909287253c90dd454620"
+        },
+        {
+          "path": "data\\processed\\binance_um_live\\depth\\ETHUSDT\\2026-10-19\\part-142318-0001.parquet",
+          "bytes": 341766,
+          "rows": 67216,
+          "sha256": "3ae1bc8faf968e48c02849ad7daedd339d70236b4f2acac1c5a4eff5e637774c"
+        },
+        {
+          "path": "data\\processed\\binance_um_live\\depth\\ETHUSDT\\2026-10-19\\part-142636-0001.parquet",
+          "bytes": 156800,
+          "rows": 28324,
+          "sha256": "69ac4ee8617ec7b9e205df716dfbedda70b641a035a19fc9ec10ff00ee419c21"
+        },
+        {
+          "path": "data\\processed\\binance_um_live\\depth\\ETHUSDT\\2026-10-19\\part-145512-0001.parquet",
+          "bytes": 48992,
+          "rows": 8043,
+          "sha256": "733abbba1b16b5e85f4a6bdb4b267eb7e7719021d66dfaf05989136a4f564379"
+        },
+        {
+          "path": "data\\processed\\binance_um_live\\depth\\ETHUSDT\\2026-10-19\\part-172227-0001.parquet",
+          "bytes": 133216,
+          "rows": 23630,
+          "sha256": "cb348bcf7a15556feae1a03744674baeecf4bc96275e69e3bff3f2c243a51f28"
+        },
+        {
+          "path": "data\\processed\\binance_um_live\\depth\\ETHUSDT\\2026-10-19\\part-1792440000188000000-0001.parquet",
+          "bytes": 164412,
+          "rows": 30174,
+          "sha256": "95189c3bc8d3891def85e447ece376b7449aebc2556ad036de613038e4ab9bcf"
+        },
+        {
+          "path": "data\\processed\\binance_um_live\\gaps\\ETHUSDT\\2026-10-19\\part-172227-0001.parquet",
+          "bytes": 1299,
+          "rows": 1,
+          "sha256": "1783ff87b9d68d4f9ac6d93f0cacd8004b6e46943d22501c2bb16dbe7a19cdf6"
+        },
+        {
+          "path": "data\\processed\\binance_um_live\\gaps\\ETHUSDT\\2026-10-19\\part-1792440000188000000-0001.parquet",
+          "bytes": 1299,
+          "rows": 1,
+          "sha256": "f3b99fbd9d86e439d401995c4d8a6b5ab2781d38ae62cbc1734b3e1653875013"
+        }
+      ]
+    },
+    "periods": {
+      "live_recording": {
+        "start": "2026-10-19",
+        "end": "2026-10-19",
+        "start_time": "00:00:00",
+        "end_time": "24:00:00",
+        "window_ns": [
+          1792368000000000000,
+          1792454400000000000
+        ],
+        "events": 77909,
+        "wall_seconds": 1.4,
+        "first_ts_ns": 1792419793713000000,
+        "last_ts_ns": 1792440009840000000,
+        "files": [
+          {
+            "path": "data\\processed\\binance_um_live\\trades\\ETHUSDT\\2026-10-19\\part-142318-0001.parquet",
+            "bytes": 21757,
+            "rows": 885,
+            "sha256": "ebb0e814721c7869e5f54c988b582e5bac47805169be0e2572870cfb1ba13ef4"
+          },
+          {
+            "path": "data\\processed\\binance_um_live\\trades\\ETHUSDT\\2026-10-19\\part-142636-0001.parquet",
+            "bytes": 11172,
+            "rows": 377,
+            "sha256": "a8e54fd9891b78010abcfb19377b519c1dd9b1049b0049ea7844756ce1e5c3e8"
+          },
+          {
+            "path": "data\\processed\\binance_um_live\\trades\\ETHUSDT\\2026-10-19\\part-145512-0001.parquet",
+            "bytes": 5288,
+            "rows": 59,
+            "sha256": "9a2b3a3de7ed03ce3276419c86edc1286cf09e183268decc634de326e1d523ff"
+          },
+          {
+            "path": "data\\processed\\binance_um_live\\trades\\ETHUSDT\\2026-10-19\\part-172227-0001.parquet",
+            "bytes": 10055,
+            "rows": 320,
+            "sha256": "4643b4c98b53dc7a1ad50ea89e2e76a496976a019cc81e1a85140f646c15f338"
+          },
+          {
+            "path": "data\\processed\\binance_um_live\\trades\\ETHUSDT\\2026-10-19\\part-1792439998890000000-0001.parquet",
+            "bytes": 13973,
+            "rows": 525,
+            "sha256": "7c71efed84c7339a8c49dc6169de93f6fec2aabb8076b91639addc6c558b6274"
+          },
+          {
+            "path": "data\\processed\\binance_um_live\\quotes\\ETHUSDT\\2026-10-19\\part-142318-0001.parquet",
+            "bytes": 471585,
+            "rows": 36058,
+            "sha256": "f528219dc28a4fb27a3d523457e528ec3e70e37f03c05c0ec59f2c9ccf16d5e1"
+          },
+          {
+            "path": "data\\processed\\binance_um_live\\quotes\\ETHUSDT\\2026-10-19\\part-142636-0001.parquet",
+            "bytes": 116161,
+            "rows": 9831,
+            "sha256": "808448a246804c9ea27a6d05de5855f9fd14fe40fa07f8f93c4953bb22bb83cf"
+          },
+          {
+            "path": "data\\processed\\binance_um_live\\quotes\\ETHUSDT\\2026-10-19\\part-145512-0001.parquet",
+            "bytes": 80399,
+            "rows": 5909,
+            "sha256": "ca1a4b533aed380b9008ab0254cd376f0144a47a21d17a7b30d53bb54d083fd6"
+          },
+          {
+            "path": "data\\processed\\binance_um_live\\quotes\\ETHUSDT\\2026-10-19\\part-172227-0001.parquet",
+            "bytes": 103737,
+            "rows": 8272,
+            "sha256": "d4c7e929d1bc76dfac26ef3b70f2f407aaf83f4a45f910bc0184b0e6a47fac00"
+          },
+          {
+            "path": "data\\processed\\binance_um_live\\quotes\\ETHUSDT\\2026-10-19\\part-1792439998885000000-0001.parquet",
+            "bytes": 163783,
+            "rows": 14724,
+            "sha256": "cbf7674531bcc62d0d7da4d951a60661b4b49e4d37ba909287253c90dd454620"
+          },
+          {
+            "path": "data\\processed\\binance_um_live\\depth\\ETHUSDT\\2026-10-19\\part-142318-0001.parquet",
+            "bytes": 341766,
+            "rows": 67216,
+            "sha256": "3ae1bc8faf968e48c02849ad7daedd339d70236b4f2acac1c5a4eff5e637774c"
+          },
+          {
+            "path": "data\\processed\\binance_um_live\\depth\\ETHUSDT\\2026-10-19\\part-142636-0001.parquet",
+            "bytes": 156800,
+            "rows": 28324,
+            "sha256": "69ac4ee8617ec7b9e205df716dfbedda70b641a035a19fc9ec10ff00ee419c21"
+          },
+          {
+            "path": "data\\processed\\binance_um_live\\depth\\ETHUSDT\\2026-10-19\\part-145512-0001.parquet",
+            "bytes": 48992,
+            "rows": 8043,
+            "sha256": "733abbba1b16b5e85f4a6bdb4b267eb7e7719021d66dfaf05989136a4f564379"
+          },
+          {
+            "path": "data\\processed\\binance_um_live\\depth\\ETHUSDT\\2026-10-19\\part-172227-0001.parquet",
+            "bytes": 133216,
+            "rows": 23630,
+            "sha256": "cb348bcf7a15556feae1a03744674baeecf4bc96275e69e3bff3f2c243a51f28"
+          },
+          {
+            "path": "data\\processed\\binance_um_live\\depth\\ETHUSDT\\2026-10-19\\part-1792440000188000000-0001.parquet",
+            "bytes": 164412,
+            "rows": 30174,
+            "sha256": "95189c3bc8d3891def85e447ece376b7449aebc2556ad036de613038e4ab9bcf"
+          },
+          {
+            "path": "data\\processed\\binance_um_live\\gaps\\ETHUSDT\\2026-10-19\\part-172227-0001.parquet",
+            "bytes": 1299,
+            "rows": 1,
+            "sha256": "1783ff87b9d68d4f9ac6d93f0cacd8004b6e46943d22501c2bb16dbe7a19cdf6"
+          },
+          {
+            "path": "data\\processed\\binance_um_live\\gaps\\ETHUSDT\\2026-10-19\\part-1792440000188000000-0001.parquet",
+            "bytes": 1299,
+            "rows": 1,
+            "sha256": "f3b99fbd9d86e439d401995c4d8a6b5ab2781d38ae62cbc1734b3e1653875013"
+          }
+        ]
+      }
+    }
+  }
+}

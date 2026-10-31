@@ -1,0 +1,15 @@
+{
+  "net_pnl_usdt": -0.2998310400000013,
+  "fees_usdt": 0.09003104,
+  "num_trades": 18,
+  "trading_volume_eth": 0.18000000000000002,
+  "final_position_eth": 0.04,
+  "abs_position_max_eth": 0.05,
+  "max_drawdown_usdt": 0.508963460000006,
+  "records": 1202,
+  "wall_clock_s_incl_compile": 4.85,
+  "data_span_s": 119.9,
+  "gap_intervals_used": 0,
+  "coverage_frac": 1.0016680567139282,
+  "run_complete": true
+}

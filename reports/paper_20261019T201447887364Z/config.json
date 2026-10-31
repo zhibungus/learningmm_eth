@@ -1,0 +1,332 @@
+{
+  "config": {
+    "run": {
+      "tag": "demo",
+      "seed": 42,
+      "out_dir": "reports"
+    },
+    "data": {
+      "symbol": "ETHUSDT",
+      "source": "live",
+      "streams": [
+        "trades",
+        "quotes",
+        "depth"
+      ],
+      "trade_dataset": "agg_trades",
+      "periods": {}
+    },
+    "strategy": {
+      "name": "demo_quoter",
+      "params": {
+        "half_spread_ticks": 2,
+        "order_qty": 0.05,
+        "max_position": 0.5,
+        "requote_ticks": 1
+      }
+    },
+    "latency": {
+      "feed_latency_ms": 240.0,
+      "order_latency_ms": 132.0,
+      "report_latency_ms": 240.0,
+      "order_jitter_ms": 59.0,
+      "feed_jitter_ms": 59.0,
+      "feed_delay_quantiles_ms": [
+        [
+          0.0,
+          130.0
+        ],
+        [
+          0.5,
+          239.0
+        ],
+        [
+          0.9,
+          296.0
+        ],
+        [
+          0.99,
+          772.0
+        ],
+        [
+          1.0,
+          1500.0
+        ]
+      ],
+      "feed_delay_knot_ms": 2000.0,
+      "no_event_ts_extra_ms": 7.0,
+      "timer_interval_ms": 1000,
+      "min_latency_ms": 1.0,
+      "allow_zero_latency": false
+    },
+    "fill_model": {
+      "type": "l2",
+      "require_trade_through": false,
+      "cancel_assumption": "proportional",
+      "initial_queue_factor": 1.0,
+      "cap_fills_by_volume": true,
+      "cross_fills": true,
+      "sweep_penalty_ticks": 1,
+      "sweep_max_tiers": 5
+    },
+    "exchange": {
+      "tick_size": 0.01,
+      "lot_size": 0.001,
+      "min_qty": 0.001,
+      "min_notional": 20.0,
+      "maker_fee": 0.0002,
+      "taker_fee": 0.0005,
+      "max_position": 1.0,
+      "max_order_notional": 5000,
+      "gap_trade_streams": [
+        "market"
+      ]
+    },
+    "account": {
+      "starting_cash": 10000.0
+    },
+    "metrics": {
+      "equity_bucket_s": 1.0,
+      "sharpe_bucket_s": 60.0,
+      "markout_horizons_s": [
+        1,
+        10,
+        60
+      ],
+      "headline_markout_s": 10,
+      "mid_sample_ms": 10.0,
+      "inventory_limit": 0.5,
+      "inventory_histogram_bins": 10
+    },
+    "sensitivity": {
+      "enabled": true,
+      "variants": {
+        "colocated": {
+          "latency": {
+            "feed_latency_ms": 10.0,
+            "order_latency_ms": 20.0,
+            "report_latency_ms": 10.0,
+            "feed_delay_quantiles_ms": null,
+            "order_jitter_ms": 0.0,
+            "feed_jitter_ms": 0.0
+          }
+        },
+        "pessimistic_fills": {
+          "fill_model": {
+            "require_trade_through": true,
+            "cancel_assumption": "all_behind",
+            "initial_queue_factor": 1.5
+          }
+        },
+        "no_cross_fills": {
+          "fill_model": {
+            "cross_fills": false
+          }
+        },
+        "latency_spikes": {
+          "latency": {
+            "feed_delay_quantiles_ms": [
+              [
+                0.0,
+                130.0
+              ],
+              [
+                0.5,
+                239.0
+              ],
+              [
+                0.9,
+                400.0
+              ],
+              [
+                0.95,
+                900.0
+              ],
+              [
+                0.99,
+                1800.0
+              ],
+              [
+                1.0,
+                3000.0
+              ]
+            ]
+          }
+        },
+        "higher_latency": {
+          "latency": {
+            "feed_delay_quantiles_ms": [
+              [
+                0.0,
+                260.0
+              ],
+              [
+                0.5,
+                478.0
+              ],
+              [
+                0.9,
+                592.0
+              ],
+              [
+                0.99,
+                1544.0
+              ],
+              [
+                1.0,
+                3000.0
+              ]
+            ],
+            "feed_latency_ms": 480.0,
+            "order_latency_ms": 264.0,
+            "report_latency_ms": 480.0
+          }
+        },
+        "pessimistic_all": {
+          "fill_model": {
+            "require_trade_through": true,
+            "cancel_assumption": "all_behind",
+            "initial_queue_factor": 1.5,
+            "cross_fills": false
+          },
+          "latency": {
+            "feed_delay_quantiles_ms": [
+              [
+                0.0,
+                260.0
+              ],
+              [
+                0.5,
+                478.0
+              ],
+              [
+                0.9,
+                592.0
+              ],
+              [
+                0.99,
+                1544.0
+              ],
+              [
+                1.0,
+                3000.0
+              ]
+            ],
+            "feed_latency_ms": 480.0,
+            "order_latency_ms": 264.0,
+            "report_latency_ms": 480.0
+          }
+        }
+      }
+    },
+    "paper": {
+      "log_interval_s": 10,
+      "heartbeat_s": 1,
+      "reorder_hold_ms": 250.0,
+      "reorder_poll_ms": 50.0
+    }
+  },
+  "meta": {
+    "mode": "paper",
+    "command": "python -m mm.paper.run --config config\\paper\\demo_paper.yaml --duration 60",
+    "feed_drops": 0,
+    "git": {
+      "commit": "1b68ff078b9b6d57876c6490f57daa4d69646010",
+      "dirty": true
+    },
+    "code": {
+      "combined_sha256": "5ea58e75b6542d06c656d645fc239c2a491b2d6654f96a6e6cb7fb48e4fed925",
+      "files": [
+        {
+          "path": "src\\mm\\__init__.py",
+          "sha256": "6a26491ed0e48522c859a512a224d839d14cfafeb258b157f488f5f834ddbed3"
+        },
+        {
+          "path": "src\\mm\\backtest\\__init__.py",
+          "sha256": "5df11407e3384ccc4313521693f6484abb88bb79e5c5dcd6550469e68b31aee7"
+        },
+        {
+          "path": "src\\mm\\backtest\\config.py",
+          "sha256": "6fdfb35aaffb7b5bf382bb14cf012a97c589df565e1e16d630271da23b314123"
+        },
+        {
+          "path": "src\\mm\\backtest\\engine.py",
+          "sha256": "1d8cdd9e749f5c19a19ce67a3dea709ac86d5f70695bd0bba8abebfb27223672"
+        },
+        {
+          "path": "src\\mm\\backtest\\examples\\__init__.py",
+          "sha256": "ea2f2cab8be43ec63a5c8e005a2e690c521369d45cfe3a68fa1557f022ef5e65"
+        },
+        {
+          "path": "src\\mm\\backtest\\examples\\demo_quoter.py",
+          "sha256": "4dda0eb6ae7f4d59054edeffb1d838384f29003f5a52a26bd00dcf2e1d3a77fa"
+        },
+        {
+          "path": "src\\mm\\backtest\\exchange.py",
+          "sha256": "00f1b54683c4e3ce8fb62bfad58805c1cd78391af0645b5cecb5c9801e98d689"
+        },
+        {
+          "path": "src\\mm\\backtest\\fills.py",
+          "sha256": "84c1dcf583340a5d83746df543eb7eb0d01654d5eef9d027f7cd21e2118c8fb2"
+        },
+        {
+          "path": "src\\mm\\backtest\\metrics.py",
+          "sha256": "a5f440640c6453190109e64a20b55cb62c5c9870174b50f3a59e301404b82ed7"
+        },
+        {
+          "path": "src\\mm\\backtest\\report.py",
+          "sha256": "e541e95d3d72f834743fb0a11c331ad9fc6bfcc7bce21a8fd182c98829bc89b1"
+        },
+        {
+          "path": "src\\mm\\backtest\\strategy.py",
+          "sha256": "19501b606ba24a26c08445da627c8846d058938ac08b6c0cac21c2b43a6dcfb4"
+        },
+        {
+          "path": "src\\mm\\data\\__init__.py",
+          "sha256": "b497b303b686ec2b6f64e6b2f1dcaba8e6db26674c98575b81e1150c76720f9d"
+        },
+        {
+          "path": "src\\mm\\data\\book.py",
+          "sha256": "ec46af74956c47a368ffa2336052c6fbdd86ebf73aa2807c3b61c018f787e3b5"
+        },
+        {
+          "path": "src\\mm\\data\\config.py",
+          "sha256": "49cc44ea79df89ab3109c6e5b989dd926466b9df864e4e9e01996196c3341e0c"
+        },
+        {
+          "path": "src\\mm\\data\\events.py",
+          "sha256": "4d4440b75f4e6ce05112568688dbbed5dd2211b18e21fec6534bca64bf0299d0"
+        },
+        {
+          "path": "src\\mm\\data\\live.py",
+          "sha256": "c3ead36a718ecfec1df836161998c9c801105174b21d3edfe9bc0d0d3f62acd2"
+        },
+        {
+          "path": "src\\mm\\data\\normalize.py",
+          "sha256": "308be7ea30c2794f548d4671b1b2d32ac1159bfcd97e51458bc6eddb7482a8e4"
+        },
+        {
+          "path": "src\\mm\\data\\schemas.py",
+          "sha256": "1e678613b4a2d7f1b680425155cb76c70d615b9ca49f932f335a7a77a070df38"
+        },
+        {
+          "path": "src\\mm\\paper\\__init__.py",
+          "sha256": "75de4a83405f52416d274edae1be5eb49b4dd1be47a5b0a1f7a882e5188feb00"
+        },
+        {
+          "path": "src\\mm\\paper\\reorder.py",
+          "sha256": "1a18f0b64e330d6bb21db5c236967d372886dc773f91e2383625a9525c2c4f86"
+        },
+        {
+          "path": "src\\mm\\paper\\run.py",
+          "sha256": "d48da697a0370963bf33695fbc38c2ab76bf6df1c3b24aa8deaca6d73c7dbf65"
+        }
+      ]
+    },
+    "notes": [
+      "PAPER RUN: live public data, simulated exchange; no real orders were sent.",
+      "Engine clock = exchange time; simulated latency feed 240.0 ms, order 132.0 ms (+ jitter), events re-ordered with a 250.0 ms hold.",
+      "Wall time 65.8 s, 18,130 events, 0 feed drops/resyncs (resting orders are cancelled on each)."
+    ]
+  }
+}

@@ -1,0 +1,411 @@
+{
+  "run_id": "2026-10-19_demo_quoter_smoke",
+  "seed": 42,
+  "periods": {
+    "in_sample": {
+      "duration_hours": 23.9999975,
+      "pnl": {
+        "total_net": -1138.0843112826824,
+        "gross_trading": -387.09960999997327,
+        "spread_capture": 26.13705500000597,
+        "inventory_pnl": -413.2366649999792,
+        "fees": 751.0211367039938,
+        "funding": -0.03643542140940159,
+        "realized": -386.84291944450297,
+        "unrealized": -0.25669055549072906,
+        "check_gross_minus_costs_minus_net": 1.2460077414289117e-10,
+        "net_if_liquidated_at_touch": -1138.6021129026813
+      },
+      "final_position": 0.29400000000000015,
+      "fills": {
+        "by_mechanism": {
+          "cross": {
+            "count": 8954,
+            "qty": 344.825,
+            "spread_capture": 2.685755000002212
+          },
+          "queue": {
+            "count": 476,
+            "qty": 17.23800000000001,
+            "spread_capture": 0.08794000000006234
+          },
+          "through": {
+            "count": 27193,
+            "qty": 700.043000000003,
+            "spread_capture": 23.363360000000796
+          }
+        },
+        "count": 36623,
+        "maker_count": 36623,
+        "taker_count": 0,
+        "maker_volume": 1062.106,
+        "taker_volume": 0.0,
+        "traded_notional": 3755105.683520033,
+        "maker_share_of_volume": 1.0
+      },
+      "orders": {
+        "submitted": 59736,
+        "accepted": 50868,
+        "rejected": 8868,
+        "reject_reasons": {
+          "post_only_would_cross": 8868
+        },
+        "risk_rejects": 0,
+        "canceled": 1,
+        "replaced": 29623,
+        "fill_ratio_orders": 0.41788550758826765,
+        "fill_ratio_qty": 0.4176414265236553
+      },
+      "max_drawdown": {
+        "abs": 1138.0843112826824,
+        "pct_of_start_cash": 0.11380843112826824
+      },
+      "sharpe": {
+        "annualized": -834.5444011514683,
+        "t_stat_mean_pnl_per_bucket": -43.651933656474,
+        "bucket_s": 60.0,
+        "n_buckets": 1439,
+        "note": "PnL-increment Sharpe; not comparable to a fund Sharpe"
+      },
+      "daily_pnl": {
+        "2024-03-29": -1138.0843112826824
+      },
+      "inventory": {
+        "mean": -0.03967337962962968,
+        "std": 0.33365635658766624,
+        "mean_abs": 0.3006818518518519,
+        "max_abs": 0.5000000000000008,
+        "p05": -0.4999999999999998,
+        "p50": -0.1,
+        "p95": 0.49400000000000005,
+        "limit": 0.5,
+        "time_at_limit_pct": 8.71412037037037,
+        "histogram": {
+          "bin_edges": [
+            -0.5,
+            -0.4,
+            -0.3,
+            -0.19999999999999996,
+            -0.09999999999999998,
+            0.0,
+            0.10000000000000009,
+            0.20000000000000007,
+            0.30000000000000004,
+            0.4,
+            0.5
+          ],
+          "time_share": [
+            0.20320601851851852,
+            0.12069444444444444,
+            0.09561342592592592,
+            0.08145833333333333,
+            0.0645949074074074,
+            0.07395833333333333,
+            0.06265046296296296,
+            0.07516203703703704,
+            0.08630787037037037,
+            0.13635416666666667
+          ]
+        }
+      },
+      "markouts": {
+        "1s": {
+          "n_fills": 36623,
+          "avg_markout_per_eth": -0.3047756062012569,
+          "avg_markout_bps": -0.8624763422346703,
+          "avg_move_per_eth": -0.3293843128651898,
+          "avg_move_bps": -0.9321545494270119,
+          "total_markout_pnl": -323.70399999999216,
+          "pct_fills_adverse": 93.47131583977281,
+          "avg_move_bps_maker": -0.9321545494270119
+        },
+        "10s": {
+          "n_fills": 36621,
+          "avg_markout_per_eth": -0.34431841251367334,
+          "avg_markout_bps": -0.9743317342415845,
+          "avg_move_per_eth": -0.3689270823328675,
+          "avg_move_bps": -1.0440098008481478,
+          "total_markout_pnl": -365.6682199999961,
+          "pct_fills_adverse": 68.6791731520166,
+          "avg_move_bps_maker": -1.0440098008481478
+        },
+        "60s": {
+          "n_fills": 36615,
+          "avg_markout_per_eth": -0.34997180275869016,
+          "avg_markout_bps": -0.989881605530868,
+          "avg_move_per_eth": -0.37458134065921356,
+          "avg_move_bps": -1.0595620722200436,
+          "total_markout_pnl": -371.6021599999938,
+          "pct_fills_adverse": 57.61026901543084,
+          "avg_move_bps_maker": -1.0595620722200436
+        }
+      },
+      "identity_gap": -1.0368239600211382e-10
+    },
+    "out_of_sample": {
+      "duration_hours": 23.999996111111113,
+      "pnl": {
+        "total_net": -838.3215024655201,
+        "gross_trading": -291.03050000000115,
+        "spread_capture": 16.864995000000754,
+        "inventory_pnl": -307.8954950000019,
+        "fees": 546.6166230379978,
+        "funding": 0.6743794275000001,
+        "realized": -291.0353749999835,
+        "unrealized": 0.004875000000015464,
+        "check_gross_minus_costs_minus_net": 2.1259438653942198e-11,
+        "net_if_liquidated_at_touch": -838.4094689655194
+      },
+      "final_position": 0.05000000000000003,
+      "fills": {
+        "by_mechanism": {
+          "through": {
+            "count": 21468,
+            "qty": 533.52,
+            "spread_capture": 15.542394999998834
+          },
+          "cross": {
+            "count": 6094,
+            "qty": 228.92299999999975,
+            "spread_capture": 1.232315000001839
+          },
+          "queue": {
+            "count": 344,
+            "qty": 13.706999999999999,
+            "spread_capture": 0.09028499999980931
+          }
+        },
+        "count": 27906,
+        "maker_count": 27906,
+        "taker_count": 0,
+        "maker_volume": 776.1500000000001,
+        "taker_volume": 0.0,
+        "traded_notional": 2733083.115189997,
+        "maker_share_of_volume": 1.0
+      },
+      "orders": {
+        "submitted": 42304,
+        "accepted": 37175,
+        "rejected": 5129,
+        "reject_reasons": {
+          "post_only_would_cross": 5128,
+          "notional_below_min": 1
+        },
+        "risk_rejects": 0,
+        "canceled": 0,
+        "replaced": 21651,
+        "fill_ratio_orders": 0.41788836583725625,
+        "fill_ratio_qty": 0.4176898359002242
+      },
+      "max_drawdown": {
+        "abs": 838.3350024655192,
+        "pct_of_start_cash": 0.08383350024655192
+      },
+      "sharpe": {
+        "annualized": -719.7788950729712,
+        "t_stat_mean_pnl_per_bucket": -37.648974136910994,
+        "bucket_s": 60.0,
+        "n_buckets": 1439,
+        "note": "PnL-increment Sharpe; not comparable to a fund Sharpe"
+      },
+      "daily_pnl": {
+        "2024-03-30": -838.3350024655192
+      },
+      "inventory": {
+        "mean": -0.005200023148148137,
+        "std": 0.3276800525198992,
+        "mean_abs": 0.2876942361111111,
+        "max_abs": 0.5000000000000006,
+        "p05": -0.49999999999999983,
+        "p50": 0.0,
+        "p95": 0.4999999999999999,
+        "limit": 0.5,
+        "time_at_limit_pct": 14.967592592592593,
+        "histogram": {
+          "bin_edges": [
+            -0.5,
+            -0.4,
+            -0.3,
+            -0.19999999999999996,
+            -0.09999999999999998,
+            0.0,
+            0.10000000000000009,
+            0.20000000000000007,
+            0.30000000000000004,
+            0.4,
+            0.5
+          ],
+          "time_share": [
+            0.15052083333333333,
+            0.0958912037037037,
+            0.09805555555555556,
+            0.09292824074074074,
+            0.050208333333333334,
+            0.11861111111111111,
+            0.07380787037037037,
+            0.07568287037037037,
+            0.09113425925925926,
+            0.1531597222222222
+          ]
+        }
+      },
+      "markouts": {
+        "1s": {
+          "n_fills": 27906,
+          "avg_markout_per_eth": -0.29577881852733934,
+          "avg_markout_bps": -0.8398699429569138,
+          "avg_move_per_eth": -0.3175078593055401,
+          "avg_move_bps": -0.9015509241083183,
+          "total_markout_pnl": -229.56872999999447,
+          "pct_fills_adverse": 95.7786855873289,
+          "avg_move_bps_maker": -0.9015509241083183
+        },
+        "10s": {
+          "n_fills": 27902,
+          "avg_markout_per_eth": -0.35442581019263836,
+          "avg_markout_bps": -1.0064666189480351,
+          "avg_move_per_eth": -0.37615442948263317,
+          "avg_move_bps": -1.068146365757437,
+          "total_markout_pnl": -275.05214999999697,
+          "pct_fills_adverse": 73.03777506988747,
+          "avg_move_bps_maker": -1.068146365757437
+        },
+        "60s": {
+          "n_fills": 27882,
+          "avg_markout_per_eth": -0.3677440948942719,
+          "avg_markout_bps": -1.0445682075981715,
+          "avg_move_per_eth": -0.38947779138731004,
+          "avg_move_bps": -1.1062622835900866,
+          "total_markout_pnl": -285.2223199999973,
+          "pct_fills_adverse": 60.16067713937308,
+          "avg_move_bps_maker": -1.1062622835900866
+        }
+      },
+      "identity_gap": -3.8198777474462986e-11
+    }
+  },
+  "period_info": {
+    "in_sample": {
+      "start": "2024-03-29",
+      "end": "2024-03-29",
+      "start_time": "00:00:00",
+      "end_time": "24:00:00",
+      "window_ns": [
+        1711670400000000000,
+        1711756800000000000
+      ],
+      "events": 8902733,
+      "wall_seconds": 139.2,
+      "first_ts_ns": 1711670400000000000,
+      "last_ts_ns": 1711756799991000000,
+      "files": [
+        {
+          "path": "data\\processed\\binance_um\\agg_trades\\ETHUSDT\\2024-03-29\\part-0.parquet",
+          "bytes": 9154653,
+          "rows": 921565,
+          "sha256": "9100029d6e07fbf00e012bfa75963206465f0f430367274609ca2373250a5119"
+        },
+        {
+          "path": "data\\processed\\binance_um\\quotes\\ETHUSDT\\2024-03-29\\part-0.parquet",
+          "bytes": 113215620,
+          "rows": 7981165,
+          "sha256": "da349973949054ce9a15304c0ecf14c5f9ba69052a3f340bc5a87b74992feaa9"
+        },
+        {
+          "path": "data\\processed\\binance_um\\funding\\ETHUSDT\\2024-03\\part-0.parquet",
+          "bytes": 2856,
+          "rows": 93,
+          "sha256": "365a36a285209b102fc0109541ec75e2c3f0d89349bed42d77cc342815a9e25a"
+        }
+      ]
+    },
+    "out_of_sample": {
+      "start": "2024-03-30",
+      "end": "2024-03-30",
+      "start_time": "00:00:00",
+      "end_time": "24:00:00",
+      "window_ns": [
+        1711756800000000000,
+        1711843200000000000
+      ],
+      "events": 6677660,
+      "wall_seconds": 115.3,
+      "first_ts_ns": 1711756800000000000,
+      "last_ts_ns": 1711843199986000000,
+      "files": [
+        {
+          "path": "data\\processed\\binance_um\\agg_trades\\ETHUSDT\\2024-03-30\\part-0.parquet",
+          "bytes": 6962128,
+          "rows": 680664,
+          "sha256": "7a1c6f8baa1e02b52961d6a54ed9b1a4891f883c30c095e20963439eead2bdb4"
+        },
+        {
+          "path": "data\\processed\\binance_um\\quotes\\ETHUSDT\\2024-03-30\\part-0.parquet",
+          "bytes": 84299113,
+          "rows": 5996993,
+          "sha256": "891b14cabd4d59d087875947264749e6db22882c04ed6f03757e4dc407596f31"
+        },
+        {
+          "path": "data\\processed\\binance_um\\funding\\ETHUSDT\\2024-03\\part-0.parquet",
+          "bytes": 2856,
+          "rows": 93,
+          "sha256": "365a36a285209b102fc0109541ec75e2c3f0d89349bed42d77cc342815a9e25a"
+        }
+      ]
+    }
+  },
+  "sensitivity": {
+    "no_cross_fills": {
+      "in_sample": {
+        "net_pnl": -1089.3984051603165,
+        "spread_capture": 2.878200000003791,
+        "inventory_pnl": -377.8687499999906,
+        "fees": 714.4155196219951,
+        "funding": -0.007664461775101494,
+        "fills": 40848,
+        "maker_share_of_volume": 1.0,
+        "fill_ratio_orders": 0.4155313894200127,
+        "sharpe": -811.8119318075367,
+        "max_drawdown": 1089.3984051603165,
+        "avg_move_headline_bps": -0.9985306329761827,
+        "final_position": 0.2639999999999998,
+        "filled_qty": 1010.256,
+        "mechanisms": {
+          "through": [
+            994.4880000000018,
+            2.7967350000036593
+          ],
+          "queue": [
+            15.768000000000002,
+            0.08146500000003788
+          ]
+        }
+      },
+      "out_of_sample": {
+        "net_pnl": -796.7173660957778,
+        "spread_capture": 1.6965600000001102,
+        "inventory_pnl": -275.4948799999963,
+        "fees": 522.4283712380028,
+        "funding": 0.49067485784939957,
+        "fills": 30886,
+        "maker_share_of_volume": 1.0,
+        "fill_ratio_orders": 0.41709031909140076,
+        "sharpe": -723.150381145964,
+        "max_drawdown": 796.7254660957769,
+        "avg_move_headline_bps": -1.022693428236774,
+        "final_position": 0.030000000000000478,
+        "filled_qty": 741.79,
+        "mechanisms": {
+          "through": [
+            728.1549999999991,
+            1.617755000000435
+          ],
+          "queue": [
+            13.635000000000002,
+            0.07880499999967104
+          ]
+        }
+      }
+    }
+  }
+}

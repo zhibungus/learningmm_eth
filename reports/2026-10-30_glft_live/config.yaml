@@ -1,0 +1,124 @@
+# GLFT market maker on our OWN live L2 recordings (Binance USD-M ETHUSDT perp, Oct 2026). Same strategy and
+# settings as glft_smoke.yaml (2024 archive); only sigma / A / k / gamma are recalibrated, on in_sample 2026-10-24.
+#
+# WORKFLOW: 1) .venv\Scripts\python.exe -m mm.strategies.glft_calibrate --config config\backtest\glft_live.yaml
+#              --out config/strategies/glft_live_calibrated.yaml --report-dir reports/<date>_glft_live_calibration
+#           2) paste sigma / A / k / gamma below (done, see the source comment)
+#           3) .venv\Scripts\python.exe -m mm.backtest.run --config config\backtest\glft_live.yaml
+# out_of_sample (2026-10-25) is never used for calibration or tuning.
+run:
+  tag: live
+  seed: 42
+
+data:
+  symbol: ETHUSDT
+  source: {depth: live, quotes: live, trades: live, funding: archive}   # our recorder; funding from the archive
+  streams: [trades, quotes, depth, funding]   # the l2 fill model reads trades + depth
+  # Full UTC days. A live day has no depth snapshot at 00:00, so each period WARMS the books from the last
+  # snapshot before the window (events before the window feed the books only; the strategy and the metrics
+  # start at 00:00). warmup_from = that snapshot's time (checked: the run stops if the warm-up has no valid book).
+  #   10-24: last snapshot 10-23 19:06:24 (the recording began 10-23 15:35; later ones are at 10-24 15:10, 15:30, 23:10)
+  #   10-25: last snapshot 10-24 23:10:26 (the reconnect after the 653 s outage)
+  # The 653 s outage (22:59:32 .. 23:10:26) sits inside in_sample: the gap marker cancels orders and the
+  # strategy waits for the resync, as in a real disconnect.
+  periods:
+    in_sample:     {start: 2026-10-24, end: 2026-10-24, warmup_from: "2026-10-23 19:06:24"}
+    out_of_sample: {start: 2026-10-25, end: 2026-10-25, warmup_from: "2026-10-24 23:10:26"}
+strategy:
+  name: glft
+  params: &glft_params           # anchor: the sensitivity variants below reuse these values (see sensitivity:)
+    # ---- model inputs: CALIBRATED on in_sample 2026-10-24 (live L2 recording) by mm.strategies.glft_calibrate
+    # (source: config/strategies/glft_live_calibrated.yaml, status ok, no stop condition). Frozen: do not tune.
+    # Trade-gap mask (spec v1.2.1, aggregate trade_id continuity): 1 id gap + 1 silence (the 653 s outage), 1 step masked.
+    sigma: 0.1819074671     # USDT/sqrt(s)   realised vol of the mid, 1 s grid
+    A: 0.1948712852         # fills/s at distance 0 (WLS fit, 10-150 ticks, R^2 0.973)
+    k: 3.8017552675         # 1/USDT
+    gamma: 0.6858150359    # 1/USDT   solved so the skew at Q = skew_at_Q_ticks = 25 ticks
+    xi_equals_gamma: true
+    skew_at_Q_ticks: 25          # used by calibration only
+    fee_mode: exact              # exact | shift
+    skew_off: false
+    # ---- exchange rules (must equal the exchange: section below)
+    maker_fee: 0.0002
+    order_qty: 0.01              # Delta, ETH
+    max_inventory: 0.05          # Q, ETH
+    min_notional_usdt: 20
+    min_qty: 0.001
+    min_half_spread_ticks: 10
+    # ---- requote rule (spec §4.6)
+    requote_ticks: 5
+    urgent_requote_ticks: 15
+    min_requote_interval_ms: 1000
+    reject_cooldown_ms: 1000
+    # ---- risk limits (spec §7)
+    stale_quote_ms: 3000
+    gap_cooldown_ms: 5000
+    spread_pause_ticks: 20
+    vol_pause_mult: 3.0
+    vol_resume_mult: 2.0
+    pause_resume_ms: 5000
+    vol_sample_ms: 1000
+    vol_ewma_halflife_s: 60
+    vol_min_samples: 60
+    max_drawdown_usdt: 5.0
+    max_rejects_per_min: 20
+    reject_window_s: 60
+    unknown_order_grace_ms: 2000   # unknown_order reject is "explained" by a final report within this (spec §7.1)
+    inventory_breach_mult: 1.5
+    flatten_on_kill: true
+    flatten_slip_ticks: 5
+    flatten_ioc_attempts: 1        # limit IOCs before market orders (spec §7.1)
+    flatten_alert_ms: 10000        # not flat this long after the kill -> flatten_failed
+    # ---- order-rate guard (spec §7.4): 50% of Binance's limits
+    rate_orders_10s_max: 150
+    rate_orders_1m_max: 600
+    rate_ip_weight_1m_max: 1200
+    max_modifies_per_order: 9000
+    ufr_warn: 0.98                 # report-only
+    print_stats_on_stop: true
+    # ---- calibration-only settings (spec §6, §11)
+    cal_sigma_dt_ms: 1000
+    cal_sigma_check_dt_ms: 10000
+    cal_lambda_dt_ms: 500
+    cal_latency_ms: 400
+    cal_delta_min_ticks: 10
+    cal_delta_max_ticks: 150
+    cal_delta_step_ticks: 5
+    cal_max_trade_silence_ms: 10000   # trade-stream outage mask (spec §6.2)
+    cal_min_hits: 20
+    cal_bootstrap: 200
+
+fill_model:
+  type: l2                        # depth recordings: the queue at every level is known
+  require_trade_through: false
+  cancel_assumption: proportional
+  initial_queue_factor: 1.0
+
+latency:
+  timer_interval_ms: 1000
+exchange:
+  tick_size: 0.01
+  lot_size: 0.001
+  min_qty: 0.001
+  min_notional: 20
+  maker_fee: 0.0002              # Binance USD-M VIP0
+  taker_fee: 0.0005
+  max_position: 0.05             # = Q; any risk_max_position reject means a strategy bug
+  max_order_notional: 5000
+
+metrics:
+  inventory_limit: 0.05          # = Q, for "time at limit"
+
+# Sensitivity (interpretation only, never for choosing parameters). Replay jobs = 2 periods x (5 base + 5 skew_off
+# + 3 x 3 param variants + 6 default variants x 1 seed) = 50 jobs. A live day replays in about 12-15 min per
+# process (~35k events/s with the l2 model), so 50 jobs / 8 workers is about 90 min of wall time.
+# The six default variants (colocated, pessimistic_fills, no_cross_fills, latency_spikes, higher_latency,
+# pessimistic_all) come from the engine defaults and run once at run.seed. Re-solved gammas (skew 10 / 50 ticks):
+# 0.1098135674 / 2.7358950079.
+sensitivity:
+  seeds: &seeds5 [42, 1, 2, 3, 4]     # base row
+  variants:
+    skew_off:   {seeds: *seeds5, strategy: {params: {<<: *glft_params, skew_off: true}}}   # H3: omega = 0 in the skew term
+    fee_shift:  {seeds: [42, 1, 2], strategy: {params: {<<: *glft_params, fee_mode: shift}}}
+    gamma_low:  {seeds: [42, 1, 2], strategy: {params: {<<: *glft_params, gamma: 0.1098135674, skew_at_Q_ticks: 10}}}
+    gamma_high: {seeds: [42, 1, 2], strategy: {params: {<<: *glft_params, gamma: 2.7358950079, skew_at_Q_ticks: 50}}}
