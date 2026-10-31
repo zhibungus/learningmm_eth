@@ -1,6 +1,6 @@
 """Fee-aware GLFT market maker for the Binance USD-M ETHUSDT perpetual.
 
-Implements ``specs/glft-perp.md`` (v1.2).  Section marks like "spec §4.4" point into that file, and
+Implements ``specs/glft-perp.md`` (v1.2).  
 
 What the strategy does, in one picture (spec Key ideas; L1 §3, §8)::
 
