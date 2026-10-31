@@ -73,7 +73,7 @@ Here `δ_b`, `δ_a` are measured from the **mid** `s`. The other symbols are as 
 - With `c ≈ 0.48 USDT` per ETH (2 bp perp), the quotes sit ~48 ticks from mid. They will rarely fill, given a 1-tick book.
 - This is the honest result: **at VIP0 the "optimal" passive quote is mostly "far away"**.
 
-> **Qualifier (2026-10-22), see [`specs/glft-perp.md`](../specs/glft-perp.md) §4.2, §4.4, §13, Appendix A:**
+> **Qualifier (2026-10-22), see [`specs/glft-perp.md`](../specs/glft-perp.md) §4.2, §4.4, Appendix A:**
 > - The shift above is only the spec's `"shift"` variant. Under exponential intensity the fee is an exact change of variable `δ̃ = δ − c`, so the fee problem is fee-free GLFT with `A → A·e^(−kc)`. The spec's default `"exact"` mode therefore also uses `A·e^(−kc)` in `ω`, which scales the skew by `e^(kc/2)` (≈11× at k = 10/USDT, c = 0.48). I checked this algebra; it holds up to O(f_m) terms (Binance charges the fee on fill price, not mid). The rescaling-of-A form is specific to `A·e^(−kδ)`.
 > - "~48 ticks from mid" holds **at zero inventory** only. With inventory, the reducing side can quote inside the fee distance (34 ticks at q = +Q in spec §10), down to the spec's 10-tick floor. That is the skew paying to shed risk.
 
