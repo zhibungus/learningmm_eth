@@ -1,6 +1,6 @@
 # Quant Market Making Lab
 
-I built a market making strategy for the Binance ETHUSDT perpetual future to learn the process from start to finish: research, spec, data, code, backtest and independent review. I did it with a team of AI agents (Claude Code subagents). Each agent had one job and handed written files to the next.
+A market making strategy for the Binance ETHUSDT perpetual future to learn the process from start to finish: research, spec, data, code, backtest and independent review, done with Claude.
 
 The strategy is a **fee-aware GLFT market maker** (Guéant–Lehalle–Fernandez-Tapia). It posts a bid and an ask around the mid-price and shifts both quotes against its inventory. The quote distances come from a closed-form formula calibrated on market data.
 
